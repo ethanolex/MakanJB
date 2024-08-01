@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Voyage - Discover the Best Eats</title>
+  <style>
+    /* Add your CSS styles here */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #e0eb4d;
+    }
+
+    header {
+      background-image: url('hero-image.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    header h1 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      font-size: 24px;
+      margin-bottom: 40px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: #FF6B6B;
+      color: white;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 4px;
+      font-size: 18px;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #E55151;
+    }
+
+    main {
+      padding: 60px 20px;
+    }
+
+    main h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    main p {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    * {
+       margin: 0; 
+       padding: 0;
+     }
+
+     div#banner { 
+       position: absolute; 
+       top: 0; 
+       left: 0; 
+       background-color: #FCF7F3; 
+       width: 100%; 
+     }
+     div#banner-content { 
+       width: 680px; 
+       margin: 0 auto; 
+       padding: 0px; 
+       border: 0px solid #000;
+     }
+     div#main-content { 
+       padding-top: 70px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }    
+    body {
+       background-image: url('https://www.nocturnal.asia/wp-content/uploads/2018/02/johor-bahru-travel-sightseeing-nightlife-guide.jpg');
+    }
+  </style>
+</head>
+<body>
+<div id="banner">
+    <div id="banner-content">
+    <center>
+    <a href='#'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png" width = '90'></a>
+    </center>
+    </div>
+  </div>
+  
+  <header>
+    <h1>Discover the Best of Johor with MakanJB</h1>
+    <p>Have the top-rated restaurants, attractions, and experiences all at your fingertips</p>
+    <a href="explore.html" class="cta-button">Start Exploring</a>
+  </header>
+
+  <main>
+  </main>
+    <footer>
+    <p>&copy; 2024 MakanJB</p>
+  </footer>
+  
+</body>
+</html>
