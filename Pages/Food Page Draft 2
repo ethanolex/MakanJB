@@ -190,6 +190,7 @@
     <div class="dropdown">
         <input type="text" id="searchInput" placeholder="Search for restaurants...">
         <button id="dropdownButton">Categories</button>
+</center>
         <ul id="dropdownContent">
         	<li>All</li>
             <li><img src="https://cdn-icons-png.flaticon.com/512/1046/1046842.png" width = '20'> Chinese</li>
@@ -199,8 +200,10 @@
             <li><img src="https://static.vecteezy.com/system/resources/previews/024/408/148/original/indian-food-recipe-isolated-icon-png.png" width = '22'> Indian</li>
         </ul>
     </div>
+<center>
     <button id="searchButton">Search</button>
     <ul id="searchResults"></ul>
+</center>
 </div>
 
 <script>
