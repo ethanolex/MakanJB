@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redirect Button Example</title>
+</head>
+<body>
+<button id="redirectButton">Go to Another Page</button>
+
+<script>
+    const redirectButton = document.getElementById('redirectButton');
+
+    redirectButton.addEventListener('click', function() {
+        // Redirect to another page
+        window.location.href = 'https://www.example.com'; // Replace this URL with the desired destination
+    });
+</script>
+</body>
+</html>
