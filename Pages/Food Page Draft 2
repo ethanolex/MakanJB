@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakanJB</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #FCF7F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    main {
+      padding: 20px;
+    }
+    .restaurant-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+.restaurant-gallery {
+      display: flex;
+      overflow-x: auto;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+    .restaurant-card {
+      flex: 0 0 300px;
+      margin-right: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      scroll-snap-align: center;
+      cursor: pointer;
+    }
+    .restaurant-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .restaurant-card .details {
+      padding: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+
+    input[type="text"] {
+        width: 60%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+    button {
+        width: 20%;
+        padding: 10px;
+        background-color: #ff6e40;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #e66339;
+        color: white;
+    }
+    button2 {
+        width: 20%;
+        padding: 8px;
+        background-color: #559acf;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    button2:hover {
+        background-color: #4b89b8;
+        color: white;
+    }
+    button3 {
+        width: 20%;
+        padding: 8px;
+        background-color: #ff6e40;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    button3:hover {
+        background-color:#e66339 ;
+        color: white;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+    li {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+    }
+    li:hover {
+        background-color: #e0e0e0;
+    }
+
+    a{
+        color: white
+    }
+    h1{
+        font-size: 30px
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href='https://www.example.com'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"></a>
+</h1>
+  </header>
+  <nav>
+    <a href="https://www.example.com">Food</a>
+    <a href="#">Shopping</a>
+    <a href="#">Massage</a>
+    <a href="#">Fun</a>
+    <a href="#">Salon/Nail</a>
+    <a href="#">Hotel</a>
+    <a href="#">Delivery</a>
+  </nav>
+  <main>
+
+<! search bar -->
+<center>
+<div class="container">
+    <div class="dropdown">
+        <input type="text" id="searchInput" placeholder="Search for restaurants...">
+        <button id="dropdownButton">Categories</button>
+	    </center>
+        <ul id="dropdownContent">
+        	<li>All</li>
+            <li><img src="https://cdn-icons-png.flaticon.com/512/1046/1046842.png" width = '20'> Chinese</li>
+            <li><img src="https://cdn.icon-icons.com/icons2/3276/PNG/512/pizza_food_fast_food_italian_food_icon_207990.png" width = '20'> Italian</li>
+            <li><img src="https://cdn-icons-png.flaticon.com/512/1357/1357569.png" width = '22'> Mexican</li>
+            <li><img src="https://static.vecteezy.com/system/resources/previews/019/617/321/original/sushi-symbol-icon-png.png" width = '22'> Japanese</li>
+            <li><img src="https://static.vecteezy.com/system/resources/previews/024/408/148/original/indian-food-recipe-isolated-icon-png.png" width = '22'> Indian</li>
+        </ul>
+    </div>
+    <center>
+    <button id="searchButton">Search</button>
+    <ul id="searchResults"></ul>
+    </center>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownContent = document.getElementById('dropdownContent');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+    
+    dropdownButton.addEventListener('click', function() {
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    const restaurants = {
+        'Chinese': ['Restaurant A', 'Restaurant B', 'Restaurant C'],
+        'Italian': ['Restaurant D', 'Restaurant E', 'Restaurant F'],
+        'Mexican': ['Restaurant G', 'Restaurant H', 'Restaurant I'],
+        'Japanese': ['Restaurant J', 'Restaurant K', 'Restaurant L'],
+        'Indian': ['Restaurant M', 'Restaurant N', 'Restaurant O']
+    };
+
+    const displayResults = (results) => {
+        searchResults.innerHTML = '';
+        results.forEach(result => {
+            const li = document.createElement('li');
+            li.textContent = result;
+            searchResults.appendChild(li);
+        });
+    };
+
+    const searchFunction = () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const category = document.querySelector('.selected-category')?.textContent.trim();
+		if (category == 'All') {
+        	let allRestaurants = Object.values(restaurants).flat();
+            let matchingRestaurants = allRestaurants.filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        } else if (category && category !== 'Categories') {
+            let matchingRestaurants = restaurants[category].filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        } else {
+            // If no category selected, search all restaurants
+            let allRestaurants = Object.values(restaurants).flat();
+            let matchingRestaurants = allRestaurants.filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        }
+    };
+    
+    document.querySelectorAll('.dropdown-content li').forEach(item => {
+        item.addEventListener('click', function() {
+            searchFunction(this.textContent.trim())();
+            dropdownContent.style.display = 'none';
+        });
+    });
+
+    dropdownContent.addEventListener('click', (e) => {
+        const selectedCategory = e.target.textContent;
+        dropdownButton.textContent = selectedCategory;
+        dropdownContent.style.display = 'none';
+
+        // Add selected category styling
+        document.querySelectorAll('.dropdown li').forEach(item => {
+            item.classList.remove('selected-category');
+        });
+        e.target.classList.add('selected-category');
+        
+        searchFunction();
+    });
+
+    searchButton.addEventListener('click', searchFunction);
+    searchInput.addEventListener('input', searchFunction);
+</script>
+
+
+
+
+<!Navigation buttons -->
+<button2 onclick="scrollToSection('section1')">Must Eats</button2>
+<button2 onclick="scrollToSection('section2')">Super Deals</button2>
+<button2 onclick="scrollToSection('section3')">Recommended</button2>
+
+
+<!Popular Dines gallery-->
+<section id="section1">
+<h1 class="card-head"><img src="https://cdn.pixabay.com/photo/2022/04/25/00/03/fire-7154678_640.png" width = '25'> Must Eats</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa Place</h2>
+        <p>Cuisine: Italian</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>Chef Meow's Hut</h2>
+        <p>Cuisine: Chinese</p>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Spice Yummy</h2>
+        <p>Cuisine: American</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Sushi Restaurant</h2>
+        <p>Cuisine: Japanese</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's Blackberries</h2>
+        <p>Cuisine: Dutch </p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+</section>
+<!Super Deals gallery-->
+<section id="section2">
+<h1 class="card-head"><img src="https://st4.depositphotos.com/17828278/23730/v/450/depositphotos_237301310-stock-illustration-modern-dollar-sign-vector-paper.jpg" width = '55'> Super Deals</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa Place</h2>
+        <p>Cuisine: Italian</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>Chef Meow's Hut</h2>
+        <p>Cuisine: Chinese</p>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Spice Yummy</h2>
+        <p>Cuisine: American</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Sushi Restaurant</h2>
+        <p>Cuisine: Japanese</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's Blackberries</h2>
+        <p>Cuisine: Dutch </p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+</section>
+<! Recommendations gallery -->
+<section id="section3">
+
+<h1 class="card-head"><img src="https://cdn.pixabay.com/photo/2022/12/27/13/13/icon-7680929_640.png" width = '35'> Recommended</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa Place</h2>
+        <p>Cuisine: Italian</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>Chef Meow's Hut</h2>
+        <p>Cuisine: Chinese</p>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Spice Yummy</h2>
+        <p>Cuisine: American</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Sushi Restaurant</h2>
+        <p>Cuisine: Japanese</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's Blackberries</h2>
+        <p>Cuisine: Dutch </p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+</section>
+
+<! Blogs gallery -->
+<section id="section3">
+
+<h1 class="card-head"><img src="https://t4.ftcdn.net/jpg/01/76/27/75/360_F_176277552_swdhWzzCfGyeflXdaZt0qFVK1PMYl6yU.jpg" width = '55'>Blogs</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa Place</h2>
+        <p>Cuisine: Italian</p>
+	    <h4>Arthur Barthur</h4>
+	    <p>I am a clueless non-foodie tourist. There, I’ve said it. And I feel much better confessing that straight away. Yet I am driven to untangle the mysteries of Malaysian Laksa...</p>
+	    <button3 id="readmore"><a href='https://www.example.com'>Read more</a></button3>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>Chef Meow's Hut</h2>
+        <p>Cuisine: Chinese</p>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Spice Yummy</h2>
+        <p>Cuisine: American</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Sushi Restaurant</h2>
+        <p>Cuisine: Japanese</p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's Blackberries</h2>
+        <p>Cuisine: Dutch </p>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+</section>
+
+  <div id="restaurant-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modal-restaurant-name">Restaurant Name</h2>
+      <p id="modal-restaurant-cuisine">Cuisine:</p>
+      <p id="modal-restaurant-price">Price range:</p>
+      <p id="modal-restaurant-rating">Rating:</p>
+      <p id="modal-restaurant-address">Address:</p>
+      <p id="modal-restaurant-phone">Phone:</p>
+      <p id="modal-restaurant-hours">Hours:</p>
+    </div>
+  </div>
+  <script>
+    // Add your JavaScript code here
+    const restaurantCards = document.querySelectorAll('.restaurant-card');
+    const modal = document.getElementById('restaurant-modal');
+    const closeButton = document.querySelector('.close-button');
+
+    restaurantCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.dataset.restaurantId;
+        // Fetch restaurant details based on restaurantId
+        const restaurantDetails = getRestaurantDetails(restaurantId);
+        updateModalContent(restaurantDetails);
+        modal.style.display = 'block';
+      });
+    });
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+</script>
+
+  </main>
+  <footer>
+    <p>&copy; 2024 MakanJB</p>
+  </footer>
+
+</body>
+</html>
