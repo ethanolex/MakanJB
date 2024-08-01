@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakanJB</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #FCF7F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    main {
+      padding: 20px;
+    }
+    .restaurant-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+.restaurant-gallery {
+      display: flex;
+      overflow-x: auto;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+    .restaurant-card {
+      flex: 0 0 300px;
+      margin-right: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      scroll-snap-align: center;
+      cursor: pointer;
+    }
+    .restaurant-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .restaurant-card .details {
+      padding: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+.search-container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .search-input {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .search-results {
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      width: 300px;
+      max-height: 300px;
+      overflow-y: auto;
+      display: none;
+      z-index: 1;
+    }
+
+    .search-results div {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .search-results div:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png">
+</h1>
+  </header>
+  <nav>
+    <a href="#">Food</a>
+    <a href="#">Shopping</a>
+    <a href="#">Massage</a>
+    <a href="#">Fun</a>
+    <a href="#">Salon/Nail</a>
+    <a href="#">Hotel</a>
+    <a href="#">Delivery</a>
+  </nav>
+    <center>
+    <h1>Laksa Place</h1>
+    
+    <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png" width = '300' />
+    
+    
+    <h4>Rating:4.5/5</h4>
+    <p>Phone number: +60 8888 8888</p>
+    <a href="https://www.grab.com/sg/">Link to Grab</a>
+        <br></br><a href="https://www.google.com.hk/maps/dir///@22.352734,114.1277,11z?entry=ttu">Link to Google Maps</a>
+    <br></br><a href="https://www.duolingo.com/learn">Click this to reserve a table</a>
+    </center>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Review Submission</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .rating {
+        display: flex;
+        justify-content: flex-end; /* Align stars to the left */
+    }
+    .rating > input {
+        display: none;
+    }
+    .rating > label {
+        display: inline-block;
+        font-size: 30px;
+        color: #ccc;
+        cursor: pointer;
+    }
+    .rating > label:before {
+        content: '\2605'; /* Unicode for a star symbol */
+    }
+    .rating > input:checked ~ label {
+        color: #FFD700; /* Gold color for filled star */
+    }
+    .rating {
+        direction: rtl; /* Right-to-left layout for stars */
+    }
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+   <center>
+    <h2>Leave a review for more points!</h2>
+    </center>
+    <form id="reviewForm">
+
+        <label for="rating">Rating:</label>
+        <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5"></label>
+            
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4"></label>
+            
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3"></label>
+            
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2"></label>
+            
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1"></label>
+        </div>
+
+        <label for="review">Review:</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+<div>
+        <button type="submit">Submit Review</button>
+        </div>
+    
+    </form>
+
+    <script>
+        const reviewForm = document.getElementById('reviewForm');
+
+        reviewForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(reviewForm);
+            const formValues = Object.fromEntries(formData.entries());
+            console.log(formValues); // You can process the form data here
+            alert('Review submitted successfully!');
+            reviewForm.reset();
+        });
+    </script>
+</body>
+</html>
