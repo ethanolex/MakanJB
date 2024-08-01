@@ -190,7 +190,6 @@
     <div class="dropdown">
         <input type="text" id="searchInput" placeholder="Search for restaurants...">
         <button id="dropdownButton">Categories</button>
-	    </center>
         <ul id="dropdownContent">
         	<li>All</li>
             <li><img src="https://cdn-icons-png.flaticon.com/512/1046/1046842.png" width = '20'> Chinese</li>
@@ -200,10 +199,8 @@
             <li><img src="https://static.vecteezy.com/system/resources/previews/024/408/148/original/indian-food-recipe-isolated-icon-png.png" width = '22'> Indian</li>
         </ul>
     </div>
-    <center>
     <button id="searchButton">Search</button>
     <ul id="searchResults"></ul>
-    </center>
 </div>
 
 <script>
@@ -279,12 +276,11 @@
 
 
 
-
 <!Navigation buttons -->
 <button2 onclick="scrollToSection('section1')">Must Eats</button2>
 <button2 onclick="scrollToSection('section2')">Super Deals</button2>
 <button2 onclick="scrollToSection('section3')">Recommended</button2>
-
+<button2 onclick="scrollToSection('section4')">Blogs</button2>
 
 <!Popular Dines gallery-->
 <section id="section1">
@@ -442,7 +438,7 @@
 </section>
 
 <! Blogs gallery -->
-<section id="section3">
+<section id="section4">
 
 <h1 class="card-head"><img src="https://t4.ftcdn.net/jpg/01/76/27/75/360_F_176277552_swdhWzzCfGyeflXdaZt0qFVK1PMYl6yU.jpg" width = '55'>Blogs</h1>
 <div class="restaurant-gallery">
@@ -461,8 +457,10 @@
       <div class="details">
         <h2>Chef Meow's Hut</h2>
         <p>Cuisine: Chinese</p>
-        <p>Price range: $-$$</p>
-        <p>Rating: 4.2/5</p>
+        <h4>Arthur Barthur</h4>
+	    <p>I am a clueless non-foodie tourist. There, I’ve said it. And I feel much better confessing that straight away. Yet I am driven to untangle the mysteries of Malaysian Laksa...</p>
+	    <button3 id="readmore"><a href='https://www.example.com'>Read more</a></button3>
+
       </div>
     </div>
     <div class="restaurant-card" data-restaurant-id="3">
@@ -470,8 +468,10 @@
       <div class="details">
         <h2>Spice Yummy</h2>
         <p>Cuisine: American</p>
-        <p>Price range: $$-$$$</p>
-        <p>Rating: 4.8/5</p>
+        <h4>Arthur Barthur</h4>
+	    <p>I am a clueless non-foodie tourist. There, I’ve said it. And I feel much better confessing that straight away. Yet I am driven to untangle the mysteries of Malaysian Laksa...</p>
+	    <button3 id="readmore"><a href='https://www.example.com'>Read more</a></button3>
+
       </div>
     </div>
     <div class="restaurant-card" data-restaurant-id="1">
@@ -479,8 +479,9 @@
       <div class="details">
         <h2>Manyu's Sushi Restaurant</h2>
         <p>Cuisine: Japanese</p>
-        <p>Price range: $$-$$$</p>
-        <p>Rating: 20/5</p>
+        <h4>Arthur Barthur</h4>
+	    <p>I am a clueless non-foodie tourist. There, I’ve said it. And I feel much better confessing that straight away. Yet I am driven to untangle the mysteries of Malaysian Laksa...</p>
+	    <button3 id="readmore"><a href='https://www.example.com'>Read more</a></button3>
       </div>
   </div>
 <div class="restaurant-card" data-restaurant-id="1">
@@ -488,8 +489,9 @@
       <div class="details">
         <h2>Pug LouLou's Blackberries</h2>
         <p>Cuisine: Dutch </p>
-        <p>Price range: $$-$$$</p>
-        <p>Rating: 10/5</p>
+        <h4>Arthur Barthur</h4>
+	    <p>I am a clueless non-foodie tourist. There, I’ve said it. And I feel much better confessing that straight away. Yet I am driven to untangle the mysteries of Malaysian Laksa...</p>
+	    <button3 id="readmore"><a href='https://www.example.com'>Read more</a></button3>
       </div>
   </div>
 </div>
