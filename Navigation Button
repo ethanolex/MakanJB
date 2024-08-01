@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Navigation</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 10px 0;
+    }
+    nav {
+        display: flex;
+        justify-content: center;
+        background-color: #f4f4f4;
+        padding: 10px 0;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 0 10px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    section {
+        padding: 20px;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <h1>Page Navigation Example</h1>
+    </header>
+
+    <nav>
+        <button onclick="scrollToSection('section1')">Section 1</button>
+        <button onclick="scrollToSection('section2')">Section 2</button>
+        <button onclick="scrollToSection('section3')">Section 3</button>
+    </nav>
+
+    <section id="section1">
+        <h2>Section 1</h2>
+        <p>This is the content of Section 1. This section is longer now to make the page scrollable. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quis mi nec sem sagittis iaculis. Nullam eget arcu vel felis efficitur lobortis. Duis nec erat vitae nunc venenatis iaculis.</p>
+        <p>Quisque vestibulum, sapien sit amet ultricies efficitur, mauris justo tincidunt mi, et aliquet ligula lacus vel elit. Suspendisse potenti. Maecenas id metus at ipsum bibendum malesuada. Curabitur at ornare mauris. Nam condimentum, felis eget tincidunt iaculis, lacus elit pellentesque lectus, nec suscipit justo purus nec nulla.</p>
+    </section>
+
+    <section id="section2">
+        <h2>Section 2</h2>
+        <p>This is the content of Section 2. This section is longer now to make the page scrollable. Vivamus pretium tellus ac sapien tincidunt, vitae consectetur justo ultricies. Proin id sapien vitae tellus convallis volutpat. Fusce sit amet posuere nunc.</p>
+        <p>Integer vel sapien nec justo eleifend faucibus. Suspendisse potenti. Nullam nec mi a nisi euismod suscipit. Sed eget arcu et velit fringilla gravida. Morbi consectetur odio eu sem maximus, sit amet cursus dolor vestibulum.</p>
+    </section>
+
+    <section id="section3">
+        <h2>Section 3</h2>
+        <p>This is the content of Section 3. This section is longer now to make the page scrollable. Donec ac orci sit amet sem pellentesque lobortis. Quisque non lacus id odio posuere tempus. Aenean auctor consectetur sem, sed iaculis massa suscipit vel.</p>
+        <p>Phasellus ac justo nec libero ultricies eleifend. Sed euismod velit sit amet ligula auctor, sit amet auctor neque congue. Nulla facilisi. Nam vel consectetur purus. Integer lacinia, nibh sit amet sagittis consectetur, lacus quam bibendum odio, sit amet sollicitudin dui ante at neque.</p>
+    </section>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
