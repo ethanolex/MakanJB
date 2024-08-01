@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Review Submission</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .rating {
+        display: flex;
+        justify-content: flex-end; /* Align stars to the left */
+    }
+    .rating > input {
+        display: none;
+    }
+    .rating > label {
+        display: inline-block;
+        font-size: 30px;
+        color: #ccc;
+        cursor: pointer;
+    }
+    .rating > label:before {
+        content: '\2605'; /* Unicode for a star symbol */
+    }
+    .rating > input:checked ~ label {
+        color: #FFD700; /* Gold color for filled star */
+    }
+    .rating {
+        direction: rtl; /* Right-to-left layout for stars */
+    }
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <form id="reviewForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="reviewTitle">Review Title:</label>
+        <input type="text" id="reviewTitle" name="reviewTitle" required>
+
+        <label for="rating">Rating:</label>
+        <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5"></label>
+            
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4"></label>
+            
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3"></label>
+            
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2"></label>
+            
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1"></label>
+        </div>
+
+        <label for="review">Review:</label>
+        <textarea id="review" name="review" rows="4" required></textarea>
+        <div>
+        <button type="submit">Submit Review</button>
+        </div>
+    </form>
+
+    <script>
+        const reviewForm = document.getElementById('reviewForm');
+
+        reviewForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(reviewForm);
+            const formValues = Object.fromEntries(formData.entries());
+            console.log(formValues); // You can process the form data here
+            alert('Review submitted successfully!');
+            reviewForm.reset();
+        });
+    </script>
+    
+    <script>
+    const reviewForm = document.getElementById('reviewForm');
+
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(reviewForm);
+
+        fetch('submit_review.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Review submitted successfully!');
+                reviewForm.reset();
+            } else {
+                alert('There was a problem submitting your review.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was a problem submitting your review.');
+        });
+    });
+</script>
+</body>
+</html>
