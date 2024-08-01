@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant Search</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+    }
+    .container {
+        width: 80%;
+        margin: 20px auto;
+        text-align: center;
+    }
+    input[type="text"] {
+        padding: 8px;
+        width: 60%;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+    }
+    button {
+        padding: 8px 20px;
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find the Best Restaurants Near You</h1>
+        <input type="text" id="searchInput" placeholder="Search for a restaurant...">
+        <button id="searchButton">Search</button>
+        <div id="restaurantResults" style="display: none;">
+            <h2>Search Results:</h2>
+            <ul id="restaurantList">
+                <li>Restaurant 1</li>
+                <li>Restaurant 2</li>
+                <li>Restaurant 3</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const restaurantResults = document.getElementById('restaurantResults');
+        const restaurantList = document.getElementById('restaurantList');
+
+        searchButton.addEventListener('click', function() {
+            const searchValue = searchInput.value.trim().toLowerCase();
+            // Simulated search results
+            const results = ['Restaurant 1', 'Restaurant 2', 'Restaurant 3'];
+
+            restaurantList.innerHTML = '';
+            results.forEach(result => {
+                if (result.toLowerCase().includes(searchValue)) {
+                    const li = document.createElement('li');
+                    li.textContent = result;
+                    restaurantList.appendChild(li);
+                }
+            });
+
+            if (restaurantList.children.length > 0) {
+                restaurantResults.style.display = 'block';
+            } else {
+                restaurantResults.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
