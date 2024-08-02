@@ -92,7 +92,7 @@
       </center>
     </div>
         <label for="review"><h3>Review:</h3></label>
-        <textarea id="review" name="review" rows="10" cols="50" style="resize: none;" placeholder="Write a review..."></textarea>
+        <textarea id="review" name="review" rows="10" cols="80" style="resize: none;" placeholder="Write a review..."></textarea>
         <div>
         <button type="submit">Submit Review</button>
         </div>
