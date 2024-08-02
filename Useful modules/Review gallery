@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Reviews - Food Voyage</title>
+  <style>
+    /* Add your CSS styles here */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .review-gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      margin-bottom: 40px;
+    }
+
+    .review-card {
+      flex: 0 0 80%;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      scroll-snap-align: center;
+      margin-right: 20px;
+    }
+
+    .review-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .review-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .review-card .rating {
+      font-size: 20px;
+      color: #ffa500;
+    }
+
+    .gallery-title {
+      font-size: 36px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="gallery-title">What Our Customers Say</h1>
+    <div class="review-gallery">
+      <div class="review-card">
+        <h3>Exceptional Dining Experience!</h3>
+        <p>I had an amazing time at this restaurant. The food was delicious, the service was impeccable, and the atmosphere was simply perfect. I would highly recommend it to anyone looking for a truly exceptional dining experience.</p>
+        <div class="rating">★★★★★</div>
+      </div>
+      <div class="review-card">
+        <h3>Fantastic Service and Ambiance</h3>
+        <p>I was thoroughly impressed with this restaurant. The staff was friendly and attentive, and the overall ambiance was simply wonderful. The food was also top-notch, making this a dining experience I won't soon forget.</p>
+        <div class="rating">★★★★☆</div>
+      </div>
+      <div class="review-card">
+        <h3>Delicious and Innovative Cuisine</h3>
+        <p>This restaurant has quickly become one of my favorites. The menu is creative and the dishes are absolutely delicious. The presentation is also impeccable, making for a truly memorable dining experience.</p>
+        <div class="rating">★★★★★</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
