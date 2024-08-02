@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Photo Gallery - Food Voyage</title>
+  <style>
+    /* Add your CSS styles here */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-title {
+      font-size: 36px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="gallery-title">The Delicious Bistro Photo Gallery</h1>
+    <div class="gallery">
+      <img src="food-photo-1.jpg" alt="Food Photo 1">
+      <img src="food-photo-2.jpg" alt="Food Photo 2">
+      <img src="food-photo-3.jpg" alt="Food Photo 3">
+      <img src="food-photo-4.jpg" alt="Food Photo 4">
+      <img src="food-photo-5.jpg" alt="Food Photo 5">
+      <img src="food-photo-6.jpg" alt="Food Photo 6">
+    </div>
+  </div>
+</body>
+</html>
