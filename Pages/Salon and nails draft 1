@@ -138,9 +138,9 @@
     <a href="#">Shopping</a>
     <a href="#">Massage</a>
     <a href="#">Fun</a>
-    <a href="#">Salon/Nail</a>
+    <a href="#">Salon</a>
     <a href="#">Hotel</a>
-    <a href="#">Delivery</a>
+    <a href="#">Nail</a>  
   </nav>
   <main>
 
@@ -153,8 +153,8 @@
         	<li>All</li>
             <li><img src="https://cdn-icons-png.freepik.com/512/4775/4775202.png" width = '20'> Nearby Salon</li>
             <li><img src="https://cdn-icons-png.flaticon.com/512/353/353874.png" width = '20'> Kid friendly Salon</li>
-            <li><img src="https://cdn-icons-png.flaticon.com/512/3313/3313928.png" width = '22'> Nearby Nails</li>
-            <li><img src="https://cdn-icons-png.flaticon.com/512/353/353874.png" width = '30'> Kid friendly nails</li>
+            <li><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ9sPVUAyUbmT284hECCFStuEVUAA0Y6qDkw&s" width = '30'> Promotions</li>
+            <li><img src="https://cdn-icons-png.flaticon.com/128/1027/1027943.png" width = '30'> Cut below 50 RM</li>
         </ul>
     </div>
     <button id="searchButton">Search</button>
@@ -174,10 +174,10 @@
 
     const restaurants = {
         'All': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection' ],
-        'Nearby Salons': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
-        'Kid friendly Salons': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
-        'Nearby Nails': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
-        'Kid friendly nails': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection']
+        'Nearby Salon': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        'Kid friendly Salon': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        'Promotions': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        'Cut below 50 RM': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection']
     };
 
     const displayResults = (results) => {
@@ -323,7 +323,7 @@
 
 <! Recommendations gallery -->
 
-<h1 class="card-head"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt-LoKLo_Y2JJhLaeDYGmwbDUbh8NNZKEhJA&s" width = '60'> Nearby Nails</h1>
+<h1 class="card-head"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt-LoKLo_Y2JJhLaeDYGmwbDUbh8NNZKEhJA&s" width = '60'> Promotions</h1>
 <div class="restaurant-gallery">
     <div class="restaurant-card" data-restaurant-id="1">
       <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
@@ -367,7 +367,7 @@
   </div>
 </div>
 
-<h1 class="card-head"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8fWYPihR2I4sCUbRsjRUV-KHy00M_Gb0r2g&s" width = '50'>Kid friendly Nails</h1>
+<h1 class="card-head"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8fWYPihR2I4sCUbRsjRUV-KHy00M_Gb0r2g&s" width = '50'>Cut below 50 RM</h1>
 <div class="restaurant-gallery">
     <div class="restaurant-card" data-restaurant-id="1">
       <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
