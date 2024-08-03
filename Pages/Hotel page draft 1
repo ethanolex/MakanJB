@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakanJB</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #FCF7F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    main {
+      padding: 20px;
+    }
+    .restaurant-card {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+.restaurant-gallery {
+      display: flex;
+      overflow-x: auto;
+      padding: 20px;
+      scroll-snap-type: x mandatory;
+    }
+    .restaurant-card {
+      flex: 0 0 300px;
+      margin-right: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      scroll-snap-align: center;
+      cursor: pointer;
+    }
+    .restaurant-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .restaurant-card .details {
+      padding: 20px;
+    }
+    .restaurant-card h2 {
+      margin-top: 0;
+    }
+    .restaurant-card p {
+      margin-bottom: 10px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+   input[type="text"] {
+        width: 60%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+    button {
+        width: 20%;
+        padding: 10px;
+        background-color: #ff6e40;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+    li {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+    }
+    li:hover {
+        background-color: #e0e0e0;
+    }
+ </style>
+</head>
+<body>
+  <header>
+    <h1><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png">
+</h1>
+  </header>
+  <nav>
+    <a href="#">Food</a>
+    <a href="#">Shopping</a>
+    <a href="#">Massage</a>
+    <a href="#">Fun</a>
+    <a href="#">Salon</a>
+    <a href="#">Hotel</a>
+    <a href="#">Nail</a>  
+  </nav>
+  <main>
+
+<! search bar -->
+ <div class="container">
+    <div class="dropdown">
+        <input type="text" id="searchInput" placeholder="Search for restaurants...">
+        <button id="dropdownButton">Categories</button>
+        <ul id="dropdownContent">
+        	<li>All</li>
+            <li><img src="https://cdn-icons-png.freepik.com/512/4775/4775202.png" width = '20'> Nearby Hotels</li>
+            <li><img src="https://cdn-icons-png.flaticon.com/512/353/353874.png" width = '20'> Kid friendly Hotels</li>
+            <li><img src="https://static-00.iconduck.com/assets.00/5-star-hotel-icon-1641x2048-y7yj1tpd.png" width = '30'> 5 star hotels</li>
+            <li><img src="https://cdn-icons-png.flaticon.com/512/10017/10017650.png" width = '30'> Super Deals</li>
+        </ul>
+    </div>
+    <button id="searchButton">Search</button>
+    <ul id="searchResults"></ul>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const dropdownButton = document.getElementById('dropdownButton');
+    const dropdownContent = document.getElementById('dropdownContent');
+    const searchButton = document.getElementById('searchButton');
+    const searchResults = document.getElementById('searchResults');
+    
+    dropdownButton.addEventListener('click', function() {
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
+
+    const restaurants = {
+        'All': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection' ],
+        'Nearby Hotels': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        'Kid friendly Hotels': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        '5 star hotels': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection'],
+        'Super Deals': ['Laksa museum', 'The Kiffness is in town!', 'Most spiciest chilli in all around the world!', 'Manyu`s Bouncy Castle', 'Pug LouLou`s Flower Crown Collection']
+    };
+
+    const displayResults = (results) => {
+        searchResults.innerHTML = '';
+        results.forEach(result => {
+            const li = document.createElement('li');
+            li.textContent = result;
+            searchResults.appendChild(li);
+        });
+    };
+
+    const searchFunction = () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const category = document.querySelector('.selected-category')?.textContent.trim();
+		if (category == 'All') {
+        	let allRestaurants = Object.values(restaurants).flat();
+            let matchingRestaurants = allRestaurants.filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        } else if (category && category !== 'Categories') {
+            let matchingRestaurants = restaurants[category].filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        } else {
+            // If no category selected, search all restaurants
+            let allRestaurants = Object.values(restaurants).flat();
+            let matchingRestaurants = allRestaurants.filter(restaurant => restaurant.toLowerCase().includes(searchTerm));
+            displayResults(matchingRestaurants);
+        }
+    };
+    
+    document.querySelectorAll('.dropdown-content li').forEach(item => {
+        item.addEventListener('click', function() {
+            searchFunction(this.textContent.trim())();
+            dropdownContent.style.display = 'none';
+        });
+    });
+
+    dropdownContent.addEventListener('click', (e) => {
+        const selectedCategory = e.target.textContent;
+        dropdownButton.textContent = selectedCategory;
+        dropdownContent.style.display = 'none';
+
+        // Add selected category styling
+        document.querySelectorAll('.dropdown li').forEach(item => {
+            item.classList.remove('selected-category');
+        });
+        e.target.classList.add('selected-category');
+        
+        searchFunction();
+    });
+
+    searchButton.addEventListener('click', searchFunction);
+    searchInput.addEventListener('input', searchFunction);
+</script>
+<!Popular Dines gallery-->
+
+<h1 class="card-head"><img src="https://cdn-icons-png.freepik.com/512/4775/4775202.png" width = '50'> Nearby Hotels</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa museum </h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>The Kiffness is in town!</h2>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Most spiciest chilli in all around the world!</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Bouncy Castle</h2>
+        <p>Price range: $$$$$-$$$$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+          <h2>Pug LouLou's Flower Crown collection</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+
+<!Super Deals gallery-->
+<h1 class="card-head"><img src="https://static.vecteezy.com/system/resources/previews/008/329/360/non_2x/playground-icon-style-free-vector.jpg" width = '55'> Kid Friendly Hotels</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa museum</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>The Kiffness is in town!</h2>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Most spiciest chilli in all around the world!</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Bouncy Castle</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's flower crown collection</h2>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+      </div>
+<! Recommendations gallery -->
+
+<h1 class="card-head"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJDg9xzEgRcy5W_qlr45JkbN_zpqd041R9Zg&s" width = '60'> 5 star hotels</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa Museum</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>The Kiffness is in town!</h2>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Most spiciest chilli in all around the world!</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Bouncy castle</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+        <h2>Pug LouLou's Flower Crown collection</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+
+<h1 class="card-head"><img src="https://cdn-icons-png.flaticon.com/512/10017/10017650.png" width = '50'>Super Deals</h1>
+<div class="restaurant-gallery">
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://static.wixstatic.com/media/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_f37a7f6c1cbe4379a69d7319f80f95d3~mv2.png">
+      <div class="details">
+        <h2>Laksa museum </h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.5/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2UOW09a8y-Ue_FtTFn01C4U4-dZmIax-P_g&s">
+      <div class="details">
+        <h2>The Kiffness is in town!</h2>
+        <p>Price range: $-$$</p>
+        <p>Rating: 4.2/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="3">
+      <img src="https://static.wixstatic.com/media/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png/v1/fill/w_898,h_896,fp_0.50_0.50,q_95,enc_auto/678a1b_a04c3a0ee23b4e7489bb87ba12b341aa~mv2.png">
+      <div class="details">
+        <h2>Most spiciest chilli in all around the world!</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 4.8/5</p>
+      </div>
+    </div>
+    <div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://i.ytimg.com/vi/W0JWj6PpUGk/hq720_2.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAAlAADIQj0AgKJD8AEB-AG2CIACgA-KAgwIABABGGUgUihDMA8=&rs=AOn4CLDz6nd3XN-S4n-Cl5jdM_z7du9DGQ">
+      <div class="details">
+        <h2>Manyu's Bouncy Castle</h2>
+        <p>Price range: $$$$$-$$$$$$</p>
+        <p>Rating: 20/5</p>
+      </div>
+  </div>
+<div class="restaurant-card" data-restaurant-id="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnmSArgH17YY_038jvsoYHm0a9B-ep-dVDYQ&s">
+      <div class="details">
+          <h2>Pug LouLou's Flower Crown collection</h2>
+        <p>Price range: $$-$$$</p>
+        <p>Rating: 10/5</p>
+      </div>
+  </div>
+</div>
+
+  <div id="restaurant-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modal-restaurant-name">Restaurant Name</h2>
+      <p id="modal-restaurant-cuisine">Cuisine:</p>
+      <p id="modal-restaurant-price">Price range:</p>
+      <p id="modal-restaurant-rating">Rating:</p>
+      <p id="modal-restaurant-address">Address:</p>
+      <p id="modal-restaurant-phone">Phone:</p>
+      <p id="modal-restaurant-hours">Hours:</p>
+    </div>
+  </div>
+  <script>
+    // Add your JavaScript code here
+    const restaurantCards = document.querySelectorAll('.restaurant-card');
+    const modal = document.getElementById('restaurant-modal');
+    const closeButton = document.querySelector('.close-button');
+
+    restaurantCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const restaurantId = card.dataset.restaurantId;
+        // Fetch restaurant details based on restaurantId
+        const restaurantDetails = getRestaurantDetails(restaurantId);
+        updateModalContent(restaurantDetails);
+        modal.style.display = 'block';
+      });
+    });
+
+    closeButton.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    });
+</script>
+
+  </main>
+  <footer>
+    <p>&copy; 2024 MakanJB</p>
+  </footer>
+
+  <script>
+    
+  </script>
+</body>
+</html>
