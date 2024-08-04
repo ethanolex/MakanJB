@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-gap: 500px;
+  justify-content: center;
+  background-color: #2196F3;
+  padding: 10px;
+  margin-bottom: auto;
+}
+
+.grid-container > div {
+  background-color: #ffff;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+</style>
+</head>
+<body>
+
+
+
+<div class="grid-container">
+  <p><img src="https://static.wikia.nocookie.net/youtube/images/6/67/Loulou_Pug.webp/revision/latest?cb=20240330141329" width='250'>hi</p>
+  <p><strong>Warakuya Japanese Garden</strong><br><br>Japanese Cuisine<br><br>4/5 stars</p>
+</div>
+shldshfkljdhflkjahdsklfahjsdlf
+
+</body>
+</html>
