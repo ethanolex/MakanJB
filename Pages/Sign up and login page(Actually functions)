@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up and Login Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    input[type=text], input[type=password] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <label for="signup-username">Username:</label>
+      <input type="text" id="signup-username" name="username" required>
+      <label for="signup-password">Password:</label>
+      <input type="password" id="signup-password" name="password" required>
+      <button type="submit">Sign Up</button>
+    </form>
+    
+    <h2>Login</h2>
+    <form id="login-form">
+      <label for="login-username">Username:</label>
+      <input type="text" id="login-username" name="username" required>
+      <label for="login-password">Password:</label>
+      <input type="password" id="login-password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    // Initialize IndexedDB
+    const request = window.indexedDB.open('userDatabase', 1);
+    request.onupgradeneeded = function(event) {
+      const db = event.target.result;
+      db.createObjectStore('users', { keyPath: 'username' });
+    };
+
+    // Sign up function
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const username = document.getElementById('signup-username').value;
+      const password = document.getElementById('signup-password').value;
+      
+      // Store the user in IndexedDB
+      const request = window.indexedDB.open('userDatabase', 1);
+      request.onsuccess = function(event) {
+        const db = event.target.result;
+        const transaction = db.transaction(['users'], 'readwrite');
+        const objectStore = transaction.objectStore('users');
+        objectStore.add({ username: username, password: password });
+        alert('Sign up successful!');
+      };
+    });
+
+    // Login function
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const username = document.getElementById('login-username').value;
+      const password = document.getElementById('login-password').value;
+      
+      // Check if the user exists in IndexedDB
+      const request = window.indexedDB.open('userDatabase', 1);
+      request.onsuccess = function(event) {
+        const db = event.target.result;
+        const transaction = db.transaction(['users'], 'readonly');
+        const objectStore = transaction.objectStore('users');
+        const request = objectStore.get(username);
+        request.onsuccess = function(event) {
+          const user = event.target.result;
+          if (user && user.password === password) {
+            alert('Login successful!');
+          } else {
+            alert('Invalid username or password.');
+          }
+        };
+      };
+    });
+  </script>
+</body>
+</html>
