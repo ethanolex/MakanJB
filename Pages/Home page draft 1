@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MakanJB</title>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #FCF7F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    main {
+      padding: 20px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
+   input[type="text"] {
+        width: 60%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        font-size: 16px;
+    }
+    button {
+        width: 20%;
+        padding: 10px;
+        background-color: #ff6e40;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+    li {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #ccc;
+        cursor: pointer;
+    }
+    li:hover {
+        background-color: #e0e0e0;
+    }
+    div#banner { 
+       position: absolute; 
+       top: 0; 
+       left: 0; 
+       background-color: #FCF7F3; 
+       width: 100%; 
+     }
+     div#banner-content { 
+       width: 680px; 
+       margin: 0 auto; 
+       padding: 0px; 
+       border: 0px solid #000;
+     }
+    .icon-button {
+        background: #f2f2f2;
+        text-align: center;
+        margin: 55px;
+        width: 75px;
+        height: 75px;
+        border-radius: 20%;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 5px;
+        margin-bottom: 0;
+    }
+
+    .icon-button:hover {
+        background-color: #d9d9d9;
+        color: white;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .meow {
+      display: grid;
+      justify-content: center;
+      grid-template-columns: 200px 200px 200px 200px;
+      grid-gap: 0px;
+      margin-bottom: 30px;
+    }
+    .meow > div {
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+    smaller {
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+ </style>
+</head>
+<body>
+  <header>
+      <a href='https://www.example.com'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"></a>
+  </header>
+  <nav>
+    <a href="#">Food</a>
+    <a href="#">Shopping</a>
+    <a href="#">Massage</a>
+    <a href="#">Fun</a>
+    <a href="#">Salon/Nail</a>
+    <a href="#">Hotel</a>
+    <a href="#">Delivery</a>
+  </nav>
+    
+<div style="display: flex; justify-content: center;">
+<div class="meow">
+    
+    <! Durian --> 
+<div class="durian">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/4899/4899162.png" width='50'></a></span><smaller>Durian</smaller>
+    </div>
+    
+  <! Ramly -->
+<div class="ramly">
+    <span class="icon-button"><a href="#"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPPFzvQj0hAYphYrCYFz26bFaOpNvOUAQcRw&s" width='50'></a></span><smaller>Ramly Burger</smaller>
+    </div>
+ <! Pharmacy -->
+    <div class="pharmacy">
+    <span class="icon-button call"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1596/1596389.png" width='50'></a></span><smaller>Pharmacy</smaller>
+    </div>
+  <! Curtain -->
+    <div class="curtain">
+       <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2584/2584785.png" width='50'></a></span><smaller>Curtain</smaller>
+    </div>
+    <! Movie -->
+  <div class="movie">
+        <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" width='50'></a></span><smaller>Movies/Cinema</smaller>
+      </div>
+ <! Seafood -->
+   <div class="seafood">
+          <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3082/3082055.png" width='50'></a></span><smaller>Seafood</smaller>
+      </div>
+ <! Food -->
+    <div class="food">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5323/5323820.png" width='50'></a></span><smaller>Food</smaller>
+      </div>
+     <! Grocery Shopping -->
+    <div class="grocery">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3082/3082011.png" width='50'></a></span><smaller>Grocery Shopping</smaller>
+    </div>
+  <! Massage -->
+    <div class="massage">
+   <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1986/1986244.png" width='50'></a></span><smaller>Massage</smaller>
+    </div>
+     <! Nail Manicure -->
+    <div class="nail">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1941/1941173.png" width='50'></a></span><smaller>Nail Manicure</smaller>
+    </div>
+         <! Salon-->
+    <div class="salon">
+   <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/452/452705.png" width='50'></a></span><smaller>Salon</smaller>
+    </div>
+          <! Fun-->
+    <div class="fun">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5766/5766409.png" width='50'></a></span><smaller>Fun</smaller>
+    </div>
+              <! Optical-->
+    <div class="optical">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5617/5617415.png" width='50'></a></span><smaller>Optical</smaller>
+    </div>
+                  <! Dental-->
+    <div class="dental">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2679/2679339.png" width='50'></a></span><smaller>Dental</smaller>
+    </div>
+       <! Aesthetic Clinic-->
+    <div class="aesthetic">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5501/5501060.png" width='50'></a></span><smaller>Aesthetic Clinic</smaller>
+    </div>
+           <! Transport-->
+    <div class="transport">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/995/995260.png" width='50'></a></span><smaller>Transport</smaller>
+    </div>
+                   <! Pub Karaoke-->
+        <div class="karaoke">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/13191/13191522.png" width='50'></a></span><smaller>Pub Karaoke</smaller>
+        </div>
+                       <! Car wash-->
+    <div class="car-wash">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1144/1144264.png" width='50'></a></span><smaller>Car Wash</smaller>
+    </div>
+                       <! Physio  Chiropractic-->
+    <div class="physio">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/414/414324.png" width='50'></a></span><smaller>Physio  Chiropractic</smaller>
+    </div>
+                      <! Pasar Malam-->
+    <div class="pasar-malam"> 
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/862/862819.png" width='50'></a></span><smaller>Pasar Malam</smaller>
+    </div>
+                        <! Furniture-->
+    <div class="furniture">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5781/5781883.png" width='50'></a></span><smaller>Furniture</smaller>
+    </div>
+                           <! Cafe-->
+    <div class="cafe">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1447/1447159.png" width='50'></a></span><smaller>Cafe</smaller>
+    </div>
+                           <! Must Eats-->
+    <div class="must-eat">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/3321/3321597.png" width='50'></a></span><smaller>Must Eats</smaller>
+    </div>
+                            <! Free trial-->
+        <div class="free-trial">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5559/5559146.png" width='50'></a></span><smaller>Free Trial</smaller> 
+        </div>
+                            <! Super Deals-->
+            <div class="super-deals">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/256/11678/11678917.png" width='50'></a></span><smaller>Super Deals</smaller>
+        </div>
+                                <! Food Blogger-->
+    <div class="food-blogger">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/5432/5432842.png" width='50'></a></span><smaller>Food Bloggers</smaller>
+    </div>
+                             <! My Favorites-->
+    <div class="my-favorites">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/14018/14018852.png" width='50'></a></span><smaller>My Favorites</smaller>
+    </div>
+                             <! Hotel/airbnb-->
+    <div class="hotel-airbnb">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2038/2038263.png" width='50'></a></span><smaller>Hotel/Airbnb</smaller>
+    </div>
+                                 <! Theme Park-->
+    <div class="theme-park">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/291/291445.png" width='50'></a></span><smaller>Theme Parks</smaller>
+    </div>
+                                 <! Buffets-->
+    <div class="buffets">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1683/1683726.png" width='50'></a></span><smaller>Buffets</smaller>
+    </div>
+                                  <! Health Screening-->
+    <div class="health-screening">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/12193/12193825.png" width='50'></a></span><smaller>Health Screening</smaller>
+    </div>
+                                      <! TCM-->
+    <div class="tcm">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/673/673561.png" width='50'></a></span><smaller>TCM</smaller>
+    </div>
+    <! Lok Lok-->
+    <div class="lok-lok">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1318/1318508.png" width='50'></a></span><smaller>Lok Lok</smaller>
+    </div>
+        <! Hotpot-->
+    <div class="hotpot">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/9126/9126605.png" width='50'></a></span><smaller>Hotpot</smaller>
+    </div>
+        <! Direct from farm-->
+    <div class="direct-from-farm">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2548/2548670.png" width='50'></a></span><smaller>Direct Products from the Farm</smaller>
+    </div>
+         <! Confinement service-->
+    <div class="confinement-service">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2641/2641391.png" width='50'></a></span><smaller>Confinement Services</smaller>
+    </div>
+         <! Wedding Photo-->
+        <div class="wedding-photo">
+    <span class="icon-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/838/838616.png" width='50'></a></span><smaller>Wedding Photo</smaller>
+    </div>
+</div>
+</div>
+</body>
+</html>
