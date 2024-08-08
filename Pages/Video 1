@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sliding Video Gallery</title>
+  <style>
+    .gallery-container {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gallery-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gallery-item.active {
+      opacity: 1;
+    }
+
+    .gallery-item video {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+	  curser: pointer;
+	  border-radius: 50px 15px;
+    }
+
+    .gallery-controls {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .gallery-controls button {
+      font-size: 2rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="gallery-container">
+    <div class="gallery-item active">
+      <video loop autoplay>
+        <source src="pugloulou.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="gallery-item">
+      <video loop autoplay muted>
+        <source src="video2.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="gallery-item">
+      <video loop autoplay muted>
+        <source src="video3.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="gallery-controls">
+      <button onclick="prevSlide()">&#10094;</button>
+      <button onclick="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const numSlides = galleryItems.length;
+    const videos = document.querySelectorAll('video');
+
+    function showSlide(n) {
+      galleryItems.forEach(item => item.classList.remove('active'));
+      galleryItems[n].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % numSlides;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + numSlides) % numSlides;
+      showSlide(currentSlide);
+    }
+    
+    function pauseAllVideos() {
+      videos.forEach(video => video.pause());
+    }
+
+    videos.forEach(video => {
+      video.addEventListener('click', () => {
+        if (video.paused) {
+          pauseAllVideos();
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    });
+
+    setInterval(nextSlide, 20000); // Auto-play every 5 seconds
+  </script>
+</body>
+</html>
