@@ -149,9 +149,9 @@ class ButtonGrid extends StatelessWidget {
                     //direct from farm
      {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2548/2548670.png'},
                         //Confinement service
-     {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2641/2641391.png'},
+     {'title': 'Confinement Service', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2641/2641391.png'},
                             //Wedding Photo
-     {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/838/838616.png'},
+     {'title': 'Wedding Photo', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/838/838616.png'},
   
   ];
 
@@ -172,7 +172,12 @@ class ButtonGrid extends StatelessWidget {
               SizedBox(height: 4), // Space between button and text
               Text(
                 buttonData[index]['title']!,
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(
+                  fontFamily: 'roboto',
+                  color: Colors.black
+                
+                ),
+                
               ),
             ],
           ),
