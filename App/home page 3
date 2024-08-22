@@ -1,0 +1,176 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Container(
+            height: 170, // Set a larger height for the title area
+            child: Image.network(      'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png', // Your image path
+              fit: BoxFit.contain, // Keep the image aspect ratio
+            ),
+          ),
+          toolbarHeight: 100, // Adjust the AppBar height
+          backgroundColor: Color(0xFFFCF7F3)
+        ),
+       
+        
+      body: ButtonGrid(),
+      ),
+    );
+  }
+}
+
+class ButtonGrid extends StatelessWidget {
+  final List<Map<String, String>> buttonData = [
+   //Durian
+    {'title': 'Durian', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/4899/4899162.png'},
+    //ramly
+    {'title': 'Ramly', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPPFzvQj0hAYphYrCYFz26bFaOpNvOUAQcRw&s'},
+    // Add more buttons here
+    //Pharmacy
+     {'title': 'Pharmacy', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1596/1596389.png'},
+    //curtain
+     {'title': 'Curtain', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2584/2584785.png'},
+    //movies or cinema    
+    {'title': 'Movies/Cinema', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2503/2503508.png'},
+    //seafood
+    {'title': 'Seafood', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/3082/3082055.png'},
+    //food
+        {'title': 'Food', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5323/5323820.png'},
+    //Grocery shopping
+            {'title': 'Grocery Shopping', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/3082/3082011.png'},
+    //massage
+                {'title': 'Massage', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1986/1986244.png'},
+    //nail manicure
+      {'title': 'Nail Manicure', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1941/1941173.png'},
+    //salon
+     {'title': 'Salon', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/452/452705.png'},
+       //fun
+     {'title': 'Fun', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5766/5766409.png'},
+           //optical
+     {'title': 'Optical', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5617/5617415.png'},
+               //dental
+     {'title': 'Dental', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2679/2679339.png'},
+                   //Aesthetic Clinic
+     {'title': 'Aesthetic Clinic', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5501/5501060.png'},
+                       //Transport
+     {'title': 'Transport', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/995/995260.png'},
+                           //pub karaoke
+     {'title': 'Pub Karaoke', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/13191/13191522.png'},
+                               //car wash
+     {'title': 'car wash', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1144/1144264.png'},
+                                   //Physio  Chiropractic
+     {'title': 'Physio  Chiropractic', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/414/414324.png'},
+                                       //Pasar malam
+     {'title': 'Pasar Malam', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/862/862819.png'},
+                                           //furniture
+     {'title': 'Furniture', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5781/5781883.png'},
+                                               //cafe
+     {'title': 'Cafe', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1447/1447159.png'},
+                                                   //Must eats
+     {'title': 'Must eats', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/3321/3321597.png'},
+                                                       //Free trial
+     {'title': 'Free Trial', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5559/5559146.png'},
+                                                           //super deals
+     {'title': 'Super Deals', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/256/11678/11678917.png'},
+                                                               //food bloggers
+     {'title': 'Food Bloggers', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/5432/5432842.png'},
+                                                                   //My Favorites
+     {'title': 'My Favourites', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/14018/14018852.png'},
+                                                                       //hotel or airbnb
+     {'title': 'Hotel/Airbnb', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2038/2038263.png'},
+                                                                           //Theme Parks
+     {'title': 'Theme Parks', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/291/291445.png'},
+                                                                               //buffets
+     {'title': 'Buffets', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1683/1683726.png'},
+    //health screening
+     {'title': 'Health Screening', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/12193/12193825.png'},
+        //tcm
+     {'title': 'TCM', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/673/673561.png'},
+            //lok lok
+     {'title': 'Lok Lok', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/1318/1318508.png'},
+                //Hotpot
+     {'title': 'Hotpot', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/9126/9126605.png'},
+                    //direct from farm
+     {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2548/2548670.png'},
+                        //Confinement service
+     {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/2641/2641391.png'},
+                            //Wedding Photo
+     {'title': 'Direct From Farm', 'url': 'https://dartpad.dev/?theme=dark', 'image': 'https://cdn-icons-png.flaticon.com/512/838/838616.png'},
+];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 4, // 4 buttons per row
+      children: List.generate(buttonData.length, (index) {
+        return UniqueHoverButton(
+          title: buttonData[index]['title']!,
+          url: buttonData[index]['url']!,
+          image: buttonData[index]['image']!,
+       
+        
+        );
+      }),
+    );
+    
+  }
+}
+
+class UniqueHoverButton extends StatelessWidget {
+  final String title;
+  final String url;
+  final String image;
+
+  UniqueHoverButton({required this.title, required this.url, required this.image});
+
+  void _launchURL() async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: _launchURL,
+          child: MouseRegion(
+            onEnter: (_) => {1},
+            onExit: (_) => {1},
+            child: Container(
+              margin: EdgeInsets.all(4), // Spacing around the button
+              decoration: BoxDecoration(
+                color: Color(0xFFF2F2F2),
+                borderRadius: BorderRadius.circular(8),
+),
+              child: Image.network(
+                image,
+                height: 50, // Adjust image height
+                width: 50, // Adjust image width
+              ),
+            ),
+          ),
+        ),
+        
+        SizedBox(height: 4), // Spacing between button and text
+        Text(
+          title,
+          style: TextStyle(color: Colors.black),
+          
+        ),
+        
+      ],
+    );
+  }
+}
