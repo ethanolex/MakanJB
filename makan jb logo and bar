@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.all(0.0), // Add padding to the title
+            child: Container(
+              height: 170,
+              child: Image.network(
+                'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png', 
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          toolbarHeight: 100,
+          backgroundColor: Color(0xFFFCF7F3),
+        ),
+        body: Column(
+          children: [
+            LinkBox(), // Add the link box here
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LinkBox extends StatelessWidget {
+  final List<Map<String, String>> links = [
+    {'title': 'Food', 'url': 'https://example.com/1'},
+    {'title': 'Shopping', 'url': 'https://example.com/2'},
+    {'title': 'Massage', 'url': 'https://example.com/3'},
+    {'title': 'Fun', 'url': 'https://example.com/4'},
+    {'title': 'Salon/Nail', 'url': 'https://example.com/5'},
+    {'title': 'Hotel', 'url': 'https://example.com/6'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+      decoration: BoxDecoration(
+        color: Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space links evenly
+        children: links.map((link) {
+          return GestureDetector(
+            onTap: () async {
+              if (await canLaunch(link['url']!)) {
+                await launch(link['url']!);
+              } else {
+                throw 'Could not launch ${link['url']}';
+              }
+            },
+            child: Text(
+              link['title']!,
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
