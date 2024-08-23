@@ -1,0 +1,132 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Search Bar and Hover Buttons',
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String _searchText = 'Search for restaurants';
+  bool _showHoverButtons = true;
+  List<HoverButtonData> _hoverButtonData = [
+    HoverButtonData(
+      icon: Icons.grid_view,
+      text: 'All',
+    ),
+    HoverButtonData(
+      icon: Icons.map_outlined,
+      text: 'Nearby Malls',
+    ),
+    HoverButtonData(
+      icon: Icons.child_care_outlined,
+      text: 'Kid Friendly Malls',
+    ),
+    HoverButtonData(
+      icon: Icons.pets_outlined,
+      text: 'Pet Friendly Malls',
+    ),
+    HoverButtonData(
+      icon: Icons.calendar_today_outlined,
+      text: 'Events',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: _searchText,
+                      border: OutlineInputBorder(),
+                      suffixIcon: _searchText.isNotEmpty
+                          ? IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  _searchText = '';
+                                });
+                              },
+                            )
+                          : null,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _searchText = value;
+                      });
+                    },
+                    onTap: () {
+                      setState(() {
+                        _searchText = '';
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(width: 16.0),
+                MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      _showHoverButtons = !_showHoverButtons;
+                    });
+                  },
+                  color: Colors.orange,
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            if (_showHoverButtons)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _hoverButtonData.map((data) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(data.icon, size: 20.0),
+                        SizedBox(width: 8.0),
+                        Text(data.text),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HoverButtonData {
+  final IconData icon;
+  final String text;
+
+  HoverButtonData({
+    required this.icon,
+    required this.text,
+  });
+}
