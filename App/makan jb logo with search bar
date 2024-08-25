@@ -1,0 +1,251 @@
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.all(0.0), // Add padding to the title
+            child: Container(
+              height: 170,
+              child: Image.network(
+                'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png', 
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          toolbarHeight: 100,
+          backgroundColor: Color(0xFFFCF7F3),
+        ),
+        body: Column(
+          children: [
+            LinkBox(), // Add the link box here
+          Expanded(child: MyHomePage()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LinkBox extends StatelessWidget {
+  final List<Map<String, String>> links = [
+    {'title': 'Food', 'url': 'https://example.com/1'},
+    {'title': 'Shopping', 'url': 'https://example.com/2'},
+    {'title': 'Massage', 'url': 'https://example.com/3'},
+    {'title': 'Fun', 'url': 'https://example.com/4'},
+    {'title': 'Salon/Nail', 'url': 'https://example.com/5'},
+    {'title': 'Hotel', 'url': 'https://example.com/6'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+      decoration: BoxDecoration(
+        color: Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space links evenly
+        children: links.map((link) {
+          return GestureDetector(
+            onTap: () async {
+              if (await canLaunch(link['url']!)) {
+                await launch(link['url']!);
+              } else {
+                throw 'Could not launch ${link['url']}';
+              }
+            },
+            child: Text(
+              link['title']!,
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String _searchText = 'Search for restaurants';
+  String _selectedCategory = 'All';
+  List<String> _results = [
+    'Example Restaurant 1',
+    'Example Restaurant 2',
+    'Example Mall 1',
+    'Example Mall 2',
+    'Example Kid Friendly Mall',
+    'Example Pet Friendly Mall',
+    'Example Event 1',
+    'Example Event 2',
+  ];
+
+  List<ButtonData> _categoryButtonData = [
+    ButtonData(
+      icon: Icons.grid_view,
+      text: 'All',
+    ),
+    ButtonData(
+      icon: Icons.map_outlined,
+      text: 'Nearby Malls',
+    ),
+    ButtonData(
+      icon: Icons.child_care_outlined,
+      text: 'Kid Friendly Malls',
+    ),
+    ButtonData(
+      icon: Icons.pets_outlined,
+      text: 'Pet Friendly Malls',
+    ),
+    ButtonData(
+      icon: Icons.calendar_today_outlined,
+      text: 'Events',
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> filteredResults = _filterResults();
+
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: _searchText,
+                      border: OutlineInputBorder(),
+                      suffixIcon: _searchText.isNotEmpty
+                          ? IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  _searchText = '';
+                                });
+                              },
+                            )
+                          : null,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _searchText = value;
+                      });
+                    },
+                    onTap: () {
+                      setState(() {
+                        _searchText = '';
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16.0),
+            Wrap(
+              spacing: 16.0,
+              runSpacing: 16.0,
+              children: _categoryButtonData.map((data) {
+                return Material(
+                  color: _selectedCategory == data.text
+                      ? Colors.orange
+                      : Colors.grey[200],
+                  elevation: 2.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(8.0),
+                    onTap: () {
+                      setState(() {
+                        _selectedCategory = data.text;
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            data.icon,
+                            size: 20.0,
+                            color: _selectedCategory == data.text
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                          SizedBox(width: 8.0),
+                          Text(
+                            data.text,
+                            style: TextStyle(
+                              color: _selectedCategory == data.text
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredResults.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(filteredResults[index]),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<String> _filterResults() {
+    switch (_selectedCategory) {
+      case 'Nearby Malls':
+        return _results.where((result) => result.contains('Mall')).toList();
+      case 'Kid Friendly Malls':
+        return _results.where((result) => result.contains('Kid Friendly')).toList();
+      case 'Pet Friendly Malls':
+        return _results.where((result) => result.contains('Pet Friendly')).toList();
+      case 'Events':
+        return _results.where((result) => result.contains('Event')).toList();
+      default:
+        return _results;
+    }
+  }
+}
+
+class ButtonData {
+  final IconData icon;
+  final String text;
+
+  ButtonData({
+    required this.icon,
+    required this.text,
+  });
+}
