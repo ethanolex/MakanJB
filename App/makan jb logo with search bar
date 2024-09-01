@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             LinkBox(), // Add the link box here
-          Expanded(child: MyHomePage()),
+            Expanded(child: MyHomePage()),
           ],
         ),
       ),
@@ -75,13 +75,16 @@ class LinkBox extends StatelessWidget {
 }
 
 
+
+
+
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _searchText = 'Search for restaurants';
+  final _searchController = TextEditingController();
   String _selectedCategory = 'All';
   List<String> _results = [
     'Example Restaurant 1',
@@ -127,37 +130,25 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: _searchText,
-                      border: OutlineInputBorder(),
-                      suffixIcon: _searchText.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                setState(() {
-                                  _searchText = '';
-                                });
-                              },
-                            )
-                          : null,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        _searchText = value;
-                      });
-                    },
-                    onTap: () {
-                      setState(() {
-                        _searchText = '';
-                      });
-                    },
-                  ),
-                ),
-              ],
+            TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                border: OutlineInputBorder(),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            _searchController.clear();
+                          });
+                        },
+                      )
+                    : null,
+              ),
+              onChanged: (value) {
+                setState(() {});
+              },
             ),
             SizedBox(height: 16.0),
             Wrap(
@@ -225,17 +216,23 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<String> _filterResults() {
+    List<String> filteredResults = _results.where((result) {
+      return result.toLowerCase().contains(_searchController.text.toLowerCase());
+    }).toList();
+
     switch (_selectedCategory) {
       case 'Nearby Malls':
-        return _results.where((result) => result.contains('Mall')).toList();
+        return filteredResults.where((result) => result.contains('Mall')).toList();
       case 'Kid Friendly Malls':
-        return _results.where((result) => result.contains('Kid Friendly')).toList();
+        return filteredResults.where((result) => result.contains('Kid Friendly'))
+            .toList();
       case 'Pet Friendly Malls':
-        return _results.where((result) => result.contains('Pet Friendly')).toList();
+        return filteredResults.where((result) => result.contains('Pet Friendly'))
+            .toList();
       case 'Events':
-        return _results.where((result) => result.contains('Event')).toList();
+        return filteredResults.where((result) => result.contains('Event')).toList();
       default:
-        return _results;
+        return filteredResults;
     }
   }
 }
