@@ -1,0 +1,228 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Restaurant Details',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: RestaurantDetailsPage(),
+    );
+  }
+}
+
+class RestaurantDetailsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Warakuya Japanese Garden')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Add space at the top
+            SizedBox(height: 20), // Adjust the height as needed
+
+            // Restaurant Image
+            Image.network(
+              'https://scontent.fhkg12-1.fna.fbcdn.net/v/t39.30808-6/306145669_610676107421981_3815466113198191485_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ImiZBlq7lvAQ7kNvgH6zVx7&_nc_ht=scontent.fhkg12-1.fna&oh=00_AYDVJNRSFp89SsEb6_AR_V29vA_na5XotSpUfYwDONm2Ag&oe=66D9EF50', // Replace with an actual image URL
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Japanese Cuisine',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+
+            // 5 Star Rating Icon
+            Row(
+              children: List.generate(5, (index) {
+                return Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                );
+              }),
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Reviews',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            _buildReviewCarousel(),
+            SizedBox(height: 16),
+            GestureDetector(
+              onTap: () {
+                // Action for leaving a review
+              },
+              child: Text(
+                'Leave a review',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue, decoration: TextDecoration.underline),
+              ),
+            ),
+            SizedBox(height: 16),
+            _buildCategoryButtons(),
+            SizedBox(height: 16),
+            Text(
+              'Featured in Blogs',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            _buildFeaturedBlogCarousel(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReviewCarousel() {
+    return Container(
+      height: 200, // Set height for the carousel
+      child: PageView(
+        children: [
+          _buildReviewItem(
+            'Exceptional Dining Experience!',
+            'I had an amazing time at this restaurant. The food was delicious...',
+            5,
+          ),
+          _buildReviewItem(
+            'Fantastic Service and Ambiance',
+            'I was thoroughly impressed with this restaurant. The staff was friendly...',
+            4,
+          ),
+          _buildReviewItem(
+            'Delicious and Innovative Cuisine',
+            'This restaurant has quickly become one of my favorites...',
+            5,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildReviewItem(String title, String content, int rating) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      color: Colors.orange[100], // Light orange background
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 4),
+            // Keeping the star rating as icons
+            Row(
+              children: List.generate(5, (index) {
+                return Icon(
+                  index < rating ? Icons.star : Icons.star_border,
+                  color: Colors.amber,
+                );
+              }),
+            ),
+            SizedBox(height: 4),
+            Text(content),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryButtons() {
+    return Wrap(
+      spacing: 16.0,
+      children: List.generate(7, (index) {
+        return _buildCircularButton(
+          'https://example.com/golden_star.png', // Use your star image URL here
+        );
+      }),
+    );
+  }
+
+  Widget _buildCircularButton(String iconUrl) {
+    return MouseRegion(
+      onEnter: (_) => _onHover(true),
+      onExit: (_) => _onHover(false),
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey[300], // Light grey background
+          border: Border.all(color: Colors.grey[400]!),
+        ),
+        child: Center(
+          child: Image.network(
+            iconUrl,
+            width: 24, // Adjust the size of the image
+            height: 24,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onHover(bool isHovered) {
+    // Logic for hover effects (if needed)
+    // You can change the button's appearance here if required
+  }
+
+  Widget _buildFeaturedBlogCarousel() {
+    return Container(
+      height: 200, // Set height for the carousel
+      child: PageView(
+        children: [
+          _buildFeaturedBlogItem(
+            'Exceptional Dining Experience!',
+            'I had an amazing time at this restaurant. The food was delicious...',
+          ),
+          _buildFeaturedBlogItem(
+            'Fantastic Service and Ambiance',
+            'I was thoroughly impressed with this restaurant. The staff was friendly...',
+          ),
+          _buildFeaturedBlogItem(
+            'Delicious and Innovative Cuisine',
+            'This restaurant has quickly become one of my favorites...',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeaturedBlogItem(String title, String content) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      color: Colors.orange[100], // Light orange background
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 4),
+            Text(content),
+            SizedBox(height: 8),
+            Text(
+              'Read more...',
+              style: TextStyle(color: Colors.blue),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
