@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliding Video Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #fffff;
+        }
+        .gallery {
+            position: absolute;
+            width: 80%;
+            height: 80vh;
+            display: flex;
+            max-width: 800px;
+            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+        }
+        video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            curser: pointer;
+            border-radius: 50px 15px;          
+        }
+        .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .btn {
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="gallery">
+    <video id="video1" src="pugloulou.mp4"></video>
+    <video id="video2" src="manyu_xiaobai.mp4"></video>
+    <div class="controls">
+        <button class="btn" onclick="prevVideo()">&#10094;</button>
+        <button class="btn" onclick="nextVideo()">&#10095;</button>
+    </div>
+</div>
+
+<script>
+    let currentVideoIndex = 0;
+    const videos = document.querySelectorAll('video');
+
+    function showVideo(index) {
+        videos.forEach((video, i) => {
+            video.style.display = (i === index) ? 'block' : 'none';
+            if (i === index) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+        currentVideoIndex = index;
+    }
+
+    function nextVideo() {
+        const nextIndex = (currentVideoIndex + 1) % videos.length;
+        showVideo(nextIndex);
+    }
+
+    function prevVideo() {
+        const prevIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+        showVideo(prevIndex);
+    }
+
+    videos.forEach(video => {
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    });
+
+    // Initially show the first video
+    showVideo(currentVideoIndex);
+</script>
+
+</body>
+</html>
