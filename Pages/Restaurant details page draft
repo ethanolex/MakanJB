@@ -32,7 +32,6 @@
       margin: 0 10px;
     }
 
-
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -68,8 +67,9 @@
 
     .restaurant-details .meow {
       display: grid;
-      grid-template-columns: repeat(2, 0.5fr);
-      grid-gap: =10px;
+      grid-template-columns: 480px 580px;
+      grid-gap: = 500px;
+      justify-content: center;
       margin-bottom: 30px;
     }
 
@@ -277,7 +277,7 @@
 </head>
 <body>
   <header>
-<a href='https://www.example.com'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"></a>
+<a href='home_page.html'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"></a>
   </header>
   <nav>
     <a href="food_page_draft.html">Food</a>
@@ -291,7 +291,7 @@
 
     <div class="restaurant-details">
       <div class="meow">
-         <p><a href="#"><img src="https://scontent.fhkg12-1.fna.fbcdn.net/v/t39.30808-6/306145669_610676107421981_3815466113198191485_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Ix3Puegtm0oQ7kNvgF2R8Ji&_nc_ht=scontent.fhkg12-1.fna&oh=00_AYBru5lWFQk-tx5Dy3XZBWl7VLw-m9_pt1QD2qo7cUI8bw&oe=66B26250" width='450'></a></p>
+         <p><a href="restaurant_photo.html"><img src="https://scontent.fhkg12-1.fna.fbcdn.net/v/t39.30808-6/306145669_610676107421981_3815466113198191485_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ImiZBlq7lvAQ7kNvgH6zVx7&_nc_ht=scontent.fhkg12-1.fna&oh=00_AYDVJNRSFp89SsEb6_AR_V29vA_na5XotSpUfYwDONm2Ag&oe=66D9EF50" width='450'></a></p>
          <p><strong style="font-size:35px">Warakuya Japanese Garden</strong><br><br>Japanese Cuisine <br><br> <span class="rating">★★★★☆</span> </p>
       </div>
 
