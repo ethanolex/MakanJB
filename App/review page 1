@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Review Page',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: ReviewPage(),
+    );
+  }
+}
+
+class ReviewPage extends StatefulWidget {
+  @override
+  _ReviewPageState createState() => _ReviewPageState();
+}
+
+class _ReviewPageState extends State<ReviewPage> {
+  int _selectedRating = 0; // Main product rating
+  bool _showCategories = false; // Show mini categories
+  List<int> _categoryRatings = [0, 0, 0, 0]; // Ratings for mini categories
+  final List<String> _categories = [
+    'Quality',
+    'Value for Money',
+    'Usability',
+    'Features'
+  ];
+
+  // Handle click on main rating stars
+  void _onStarTapped(int rating) {
+    setState(() {
+      _selectedRating = rating;
+      _showCategories = true;
+    });
+  }
+
+  // Handle click on mini category stars
+  void _onCategoryStarTapped(int index, int rating) {
+    setState(() {
+      _categoryRatings[index] = rating;
+    });
+  }
+
+  // Check if all mini categories are rated
+  bool _allCategoriesRated() {
+    return _categoryRatings.every((rating) => rating > 0);
+  }
+
+  // Submit review handler
+  void _submitReview() {
+    if (_allCategoriesRated()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Review submitted!')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please rate all categories!')),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Review Page')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Rate this product:', style: TextStyle(fontSize: 20)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(5, (index) {
+                return IconButton(
+                  icon: Icon(
+                    index < _selectedRating ? Icons.star : Icons.star_border,
+                    color: Colors.amber,
+                  ),
+                  onPressed: () => _onStarTapped(index + 1),
+                );
+              }),
+            ),
+            if (_showCategories) ...[
+              SizedBox(height: 20),
+              Text('Rate Each Category:', style: TextStyle(fontSize: 20)),
+              Column(
+                children: List.generate(_categories.length, (index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_categories[index], style: TextStyle(fontSize: 18)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(5, (starIndex) {
+                          return IconButton(
+                            icon: Icon(
+                              starIndex < _categoryRatings[index]
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: Colors.amber,
+                            ),
+                            onPressed: () =>
+                                _onCategoryStarTapped(index, starIndex + 1),
+                          );
+                        }),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  );
+                })),
+              ],
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitReview,
+                child: Text('Submit Review'),
+              ),
+            ],
+          
+        ),
+      ),
+    );
+  }
+}
