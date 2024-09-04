@@ -1,55 +1,139 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Restaurant Details',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: RestaurantDetailsPage(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.all(0.0), // Add padding to the title
+            child: Container(
+              height: 170,
+              child: Image.network(
+                'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png', 
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+          toolbarHeight: 100,
+          backgroundColor: Color(0xFFFCF7F3),
+        ),
+        body: Column(
+          children: [
+            LinkBox(), // Add the link box here
+            Expanded(child: RestaurantDetailsPage()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LinkBox extends StatelessWidget {
+  final List<Map<String, String>> links = [
+    {'title': 'Food', 'url': 'https://example.com/1'},
+    {'title': 'Shopping', 'url': 'https://example.com/2'},
+    {'title': 'Massage', 'url': 'https://example.com/3'},
+    {'title': 'Fun', 'url': 'https://example.com/4'},
+    {'title': 'Salon/Nail', 'url': 'https://example.com/5'},
+    {'title': 'Hotel', 'url': 'https://example.com/6'},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(5.0),
+      margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
+      decoration: BoxDecoration(
+        color: Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space links evenly
+        children: links.map((link) {
+          return GestureDetector(
+            onTap: () async {
+              if (await canLaunch(link['url']!)) {
+                await launch(link['url']!);
+              } else {
+                throw 'Could not launch ${link['url']}';
+              }
+            },
+            child: Text(
+              link['title']!,
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }
 
 class RestaurantDetailsPage extends StatelessWidget {
+  final int rating; // Changeable rating value
+
+  RestaurantDetailsPage({this.rating = 5}); // Default rating is set to 5
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Warakuya Japanese Garden')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Add space at the top
-            SizedBox(height: 20), // Adjust the height as needed
+            SizedBox(height: 20),
 
-            // Restaurant Image
-            Image.network(
-              'https://scontent.fhkg12-1.fna.fbcdn.net/v/t39.30808-6/306145669_610676107421981_3815466113198191485_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ImiZBlq7lvAQ7kNvgH6zVx7&_nc_ht=scontent.fhkg12-1.fna&oh=00_AYDVJNRSFp89SsEb6_AR_V29vA_na5XotSpUfYwDONm2Ag&oe=66D9EF50', // Replace with an actual image URL
-              height: 200,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Japanese Cuisine',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-
-            // 5 Star Rating Icon
+            // Row for Image and Text
             Row(
-              children: List.generate(5, (index) {
-                return Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                );
-              }),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Fixed size Restaurant Image
+                Container(
+                  width: 316, // Fixed width
+                  height: 400, // Fixed height
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  clipBehavior: Clip.hardEdge, // Clip to the container's bounds
+                  child: Image.network(
+                    'https://scontent.fhkg12-1.fna.fbcdn.net/v/t39.30808-6/306145669_610676107421981_3815466113198191485_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ImiZBlq7lvAQ7kNvgH6zVx7&_nc_ht=scontent.fhkg12-1.fna&oh=00_AYDVJNRSFp89SsEb6_AR_V29vA_na5XotSpUfYwDONm2Ag&oe=66D9EF50', // Replace with an actual image URL
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(width: 16), // Space between image and text
+                // Text and Stars
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Warakuya Japanese Garden',
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Japanese Cuisine',
+                      style: TextStyle(fontSize: 20,),
+                    ),
+                    SizedBox(height: 8),
+                    // Star Rating Icon - Fixed based on rating
+                    Row(
+                      children: List.generate(5, (index) {
+                        return Icon(
+                          index < rating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                        );
+                      }),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(height: 16),
             Text(
@@ -69,7 +153,15 @@ class RestaurantDetailsPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            _buildCategoryButtons(),
+            _buildCategoryButtons([
+              'https://static-00.iconduck.com/assets.00/call-icon-2047x2048-1v137evf.png',
+              'https://cdn-icons-png.flaticon.com/512/2956/2956869.png',
+              'https://static.thenounproject.com/png/1092662-200.png',
+              'https://static.vecteezy.com/system/resources/previews/014/455/886/non_2x/share-icon-on-transparent-background-free-png.png',
+              'https://cdn-icons-png.flaticon.com/512/786/786352.png',
+              'https://cdn.iconscout.com/icon/free/png-256/free-directions-1782209-1512759.png?f=webp&w=256',
+              'https://static.wikia.nocookie.net/logopedia/images/a/a1/1564735942221.png/revision/latest?cb=20190802085616',
+            ]),
             SizedBox(height: 16),
             Text(
               'Featured in Blogs',
@@ -139,14 +231,12 @@ class RestaurantDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryButtons() {
+  Widget _buildCategoryButtons(List<String> iconUrls) {
     return Wrap(
-      spacing: 16.0,
-      children: List.generate(7, (index) {
-        return _buildCircularButton(
-          'https://example.com/golden_star.png', // Use your star image URL here
-        );
-      }),
+      spacing: 24.0, // Increased spacing between buttons
+      children: iconUrls.map((iconUrl) {
+        return _buildCircularButton(iconUrl);
+      }).toList(),
     );
   }
 
@@ -216,9 +306,19 @@ class RestaurantDetailsPage extends StatelessWidget {
             SizedBox(height: 4),
             Text(content),
             SizedBox(height: 8),
-            Text(
-              'Read more...',
-              style: TextStyle(color: Colors.blue),
+            GestureDetector(
+              onTap: () async {
+                const url = 'https://example.com'; // Change to your desired link
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              child: Text(
+                'Read more...',
+                style: TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+              ),
             ),
           ],
         ),
