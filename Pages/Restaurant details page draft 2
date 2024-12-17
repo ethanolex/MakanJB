@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Details</title>
+  <style>
+    /* Add your CSS styles here */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fffff;
+    }
+
+    header {
+      background-color: #FCF7F3;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: center;
+    }
+    nav a {
+      color: #333;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .restaurant-details {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 ;
+      padding: 40px;
+    }
+
+    .restaurant-details h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .restaurant-details .rating {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FF6B6B;
+      margin-bottom: 10px;
+    }
+
+    .restaurant-details .details {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      grid-gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .restaurant-details .meow {
+      display: grid;
+      grid-template-columns: 480px 580px;
+      grid-gap: = 500px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .restaurant-details .meowmi {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      grid-gap: = 500px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+
+    .restaurant-details .socialfeed {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .restaurant-details .socialpost{
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .restaurant-details .socialpostimg{
+      width: 100%;
+      height: auto;
+    }
+    .restaurant-details .socialpostcontent{
+      padding: 15px;
+    }
+    .restaurant-details .socialposttitle {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 0 0 10px;
+    }
+    .restaurant-details .socialpostdescription {
+      font-size: 0.9em;
+      color: #555;
+      margin: 0 0 10px;
+    }
+    .restaurant-details .socialpostinfo {
+      font-size: 0.8em;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+
+
+    .restaurant-details .details p {
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .review-gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      margin-bottom: 40px;
+    }
+
+    .blog-gallery {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      margin-bottom: 40px;
+    }
+    .blog-card {
+      flex: 0 0 50%;
+      padding: 30px;
+      background-color: #FCF7F3;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      scroll-snap-align: center;
+      margin-right: 20px;
+    }
+
+    .blog-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .blog-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .review-card {
+      flex: 0 0 80%;
+      padding: 30px;
+      background-color: #FCF7F3;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      scroll-snap-align: center;
+      margin-right: 20px;
+    }
+
+    .review-card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .review-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .review-card .rating {
+      font-size: 20px;
+      color: #ffa500;
+    }
+
+    .gallery-title {
+      font-size: 36px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .restaurant-details .menu {
+      margin-bottom: 30px;
+    }
+
+    .restaurant-details .menu h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .restaurant-details .menu ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .restaurant-details .menu ul li {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .restaurant-details .photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+
+    .restaurant-details .photos img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    }
+    form {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    .star {
+      color: #ccc;
+      font-size: 30px;
+      cursor: pointer;
+    }
+    .star.active {
+      color: gold;
+    }
+    .aspect-ratings {
+      display: none;
+    }
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .circle-button {
+        background: #f2f2f2;
+        text-align: center;
+        margin: 55px;
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 35px;
+        color: white;
+        font-weight: bold;
+        text-decoration: none
+    }
+
+    .circle-button:hover {
+        background-color: #d9d9d9;
+        color: white;
+    }
+    button3 {
+        width: 20%;
+        padding: 8px;
+        background-color: #ff6e40;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+    button3:hover {
+        background-color:#e66339 ;
+        color: white;
+    }
+     div#banner { 
+       position: absolute; 
+       top: 0; 
+       left: 0; 
+       background-color: #FCF7F3; 
+       width: 100%; 
+     }
+     div#banner-content { 
+       width: 680px; 
+       margin: 0 auto; 
+       padding: 0px; 
+       border: 0px solid #000;
+     }
+     div#main-content { 
+       padding-top: 70px;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }    
+  </style>
+</head>
+<body>
+  <header>
+<a href='home_page.html'><img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"></a>
+  </header>
+  <nav>
+    <a href="food_page_draft.html">Food</a>
+    <a href="shopping_page_draft.html">Shopping</a>
+    <a href="#">Massage</a>
+    <a href="fun_page_draft.html">Fun</a>
+    <a href="#">Salon/Nail</a>
+    <a href="#">Hotel</a>
+    <a href="#">Delivery</a>
+  </nav>
+
+    <div class="restaurant-details">
+      <div class="meow">
+         <p><a href="restaurant_photo.html"><img src="https://lh3.googleusercontent.com/p/AF1QipOCKO_o4KW0WT5SXRxLO-bYwVFLJiklLSUOCcvM=s1360-w1360-h1020" width='450'></a></p>
+         <p><strong style="font-size:35px">Warakuya Japanese Garden</strong><br><br>Japanese Cuisine <br><br> <span class="rating">★★★★☆</span> </p>
+      </div>
+      <div class="meowmi">
+        <p><span class="circle-button"><a href="#"><img src="https://static-00.iconduck.com/assets.00/call-icon-2047x2048-1v137evf.png" width='25'></a></span></p>
+        <p><span class="circle-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2956/2956869.png" width='40'></a></span></p>
+        <p><span class="circle-button call"><a href="#"><img src="https://static.thenounproject.com/png/1092662-200.png" width='35'></a></span></p>
+        <p><span class="circle-button"><a href="#"><img src="https://www.svgrepo.com/show/27444/share.svg" width='30'></a></span></p>
+        <p><span class="circle-button"><a href="#"><img src="https://cdn-icons-png.flaticon.com/512/786/786352.png" width='30'></a></span></p>
+        <p><span class="circle-button"><a href="#"><img src="https://cdn.iconscout.com/icon/free/png-256/free-directions-1782209-1512759.png?f=webp&w=256" width='40'></a></span></p>
+        <p><span class="circle-button"><a href="#"><img src="https://cdn.icon-icons.com/icons2/3912/PNG/512/grab_logo_icon_248153.png" width='55'></a></span></p>     
+      </div>
+
+<! Reviews -->
+<h1>Reviews</h1>
+    <div class="review-gallery" onscroll="checkScrollEnd()">
+      <div class="review-card">
+        <h3>Exceptional Dining Experience!</h3>
+        <div class="rating">★★★★★</div>
+        <p>I had an amazing time at this restaurant. The food was delicious, the service was impeccable, and the atmosphere was simply perfect. I would highly recommend it to anyone looking for a truly exceptional dining experience.</p>
+        <img src="https://fastly.4sqi.net/img/general/600x600/127599666_TP8Vj_Rh2dLZ03HygI3meXEIulx26QcaM__dZcB4RJs.jpg" width='150'>
+        <img src="https://sethlui.com/wp-content/uploads/2017/07/Warakuya-10-800x534.jpg" width='225'>
+      </div>
+      
+      <div class="review-card">
+        <h3>Fantastic Service and Ambiance</h3>
+        <div class="rating">★★★★☆</div>
+        <p>I was thoroughly impressed with this restaurant. The staff was friendly and attentive, and the overall ambiance was simply wonderful. The food was also top-notch, making this a dining experience I won't soon forget.</p>
+        <img src="https://2.bp.blogspot.com/-0unvCZHVcSs/VACxRe6OOBI/AAAAAAAAAj4/rsGS84f5Skw/s1600/IMG_8117.JPG" width='200'>
+		    <img src="https://fastly.4sqi.net/img/general/600x600/10463680_2ArBAwLHtcoyQX5GwkrRrQGplUyi_qV8_hYM7kOMvLY.jpg" width='150'>
+      </div>
+      
+      <div class="review-card">
+        <h3>Delicious and Innovative Cuisine</h3>
+        <div class="rating">★★★★★</div>
+        <p>This restaurant has quickly become one of my favorites. The menu is creative and the dishes are absolutely delicious. The presentation is also impeccable, making for a truly memorable dining experience.</p>
+		    <img src="https://demwvw9lpu8ak.cloudfront.net/attachments/2d91e97ab07919fef786b6cb489849cdb27a708c/store/41e53eaa328ce4f78313425b39af30918d1eedac87ff81765dc1d8b96548/attached_image" width='150'>        
+      </div>
+    </div>
+<strong><a style="color:black" href="review_page_draft.html">Leave a review</a></strong>
+<br><br><br>
+
+
+<! restaurant information -->
+      <div class="details">
+        <p><a href="https://www.google.com/maps/place/Warakuya+Japanese+Garden/@1.5177825,103.6649605,17z/data=!3m1!4b1!4m6!3m5!1s0x31da73a793ac984d:0xfae93eee1d615b65!8m2!3d1.5177825!4d103.6675354!16s%2Fg%2F11bc8cq6m2?entry=ttu"><img src="https://akm-img-a-in.tosshub.com/indiatoday/images/bodyeditor/202002/Maps_Pin_FullColor-x1000.png?p5mE6zsNfbzHgIfhAD8xdamQCvveDfkN?size=750:*" width='25'></a> 2, Jalan Sutera Tanjung 8/4, Taman Sutera Utama</p>
+        <p><img src="https://www.iconpacks.net/icons/1/free-phone-icon-1-thumb.png" width='20'> (123) 456-7890</p>
+        <p><img src="https://static-00.iconduck.com/assets.00/money-icon-2048x2048-q99hqr89.png" width='20'>  RM25 - RM45/pax</p>	    
+        <p><img src="https://static.thenounproject.com/png/2683718-200.png" width='20'> Mon-Sat: 11am - 10pm, Sun: 12pm - 9pm</p>
+      </div>
+
+
+<! Featured social media feed -->
+<h1>Featured by Creators</h1>
+    <div class="socialfeed">
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 1">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">老得慢的女人</h2>
+              <p class="socialpostdescription">人要懂得爱惜自己，保持关心！</p>
+              <div class="socialpostinfo">
+                  <span>6 Likes</span>
+                  <span>6 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 2">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">罗马最大的单品出现了！！</h2>
+              <p class="socialpostdescription">美味的热狗，快来尝尝吧！</p>
+              <div class="socialpostinfo">
+                  <span>8 Likes</span>
+                  <span>3 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 3">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">把脸做好</h2>
+              <p class="socialpostdescription">只需要一个月！戒糖。</p>
+              <div class="socialpostinfo">
+                  <span>10 Likes</span>
+                  <span>12 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 4">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">山蟹喜欢这道菜吗？</h2>
+              <p class="socialpostdescription">一起分享美味，来吧！</p>
+              <div class="socialpostinfo">
+                  <span>15 Likes</span>
+                  <span>5 Comments</span>
+              </div>
+          </div>
+      </div>
+      
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 4">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">山蟹喜欢这道菜吗？</h2>
+              <p class="socialpostdescription">一起分享美味，来吧！</p>
+              <div class="socialpostinfo">
+                  <span>15 Likes</span>
+                  <span>5 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 4">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">山蟹喜欢这道菜吗？</h2>
+              <p class="socialpostdescription">一起分享美味，来吧！</p>
+              <div class="socialpostinfo">
+                  <span>15 Likes</span>
+                  <span>5 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 4">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">山蟹喜欢这道菜吗？</h2>
+              <p class="socialpostdescription">一起分享美味，来吧！</p>
+              <div class="socialpostinfo">
+                  <span>15 Likes</span>
+                  <span>5 Comments</span>
+              </div>
+          </div>
+      </div>
+
+      <div class="socialpost">
+          <img src="https://via.placeholder.com/250" alt="Post image 4">
+          <div class="socialpostcontent">
+              <h2 class="socialposttitle">山蟹喜欢这道菜吗？</h2>
+              <p class="socialpostdescription">一起分享美味，来吧！</p>
+              <div class="socialpostinfo">
+                  <span>15 Likes</span>
+                  <span>5 Comments</span>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 MakanJB</p>
+  </footer>
+
+
+  <script>
+    function checkScrollEnd() {
+        const gallery = document.querySelector('.review-gallery');
+        const totalWidth = gallery.scrollWidth;
+        const scrollLeft = gallery.scrollLeft;
+        const clientWidth = gallery.clientWidth;
+
+        if (scrollLeft + clientWidth >= totalWidth) {
+          location.replace("restaurant_reviews_draft.html"); 
+        } 
+    }
+  </script>
+
+
+</body>
+</html>
