@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reels Style Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .video-container {
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        video {
+            width: 100%;
+            height: auto;  /* Maintain aspect ratio */
+            object-fit: contain;  /* Ensure the entire video is visible */
+        }
+        .comments-container {
+            width: 50%;
+            height: 100%;
+            background-color: #fff;
+            border-left: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            position: relative; /* For positioning the button */
+        }
+        .comments-list {
+            flex: 1; /* Take up remaining space */
+            overflow-y: auto; /* Allow scrolling if comments overflow */
+            padding: 15px;
+        }
+        .emoji-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .emoji {
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .comment-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .comment {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            background-color: #ccc; /* Placeholder for avatar */
+        }
+        .comment-content {
+            flex: 1;
+        }
+        .comment-author {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .comment-text {
+            display: inline;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #888;
+            margin-left: 10px;
+        }
+        .comment-button {
+            position: absolute;
+            bottom: 70px; /* Adjusted for the comment input height */
+            right: 20px; /* Position from the right */
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%; /* Circular button */
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .comment-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .input-container {
+            padding: 15px; /* Padding for the input section */
+            background-color: #fff; /* Background color for input area */
+            border-top: 1px solid #ccc; /* Top border for separation */
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container" onclick="togglePlay()">
+    <video id="video" unmuted>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"> <!-- Update this line with your video source -->
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<div class="comments-container" id="commentsContainer" style="display: none;">
+    <h3>Comments</h3>
+    <div class="comments-list" id="comments"></div>
+    
+    <div class="emoji-container">
+        <span class="emoji" onclick="addEmoji('😀')">😀</span>
+        <span class="emoji" onclick="addEmoji('❤️')">❤️</span>
+        <span class="emoji" onclick="addEmoji('👍')">👍</span>
+        <span class="emoji" onclick="addEmoji('🎉')">🎉</span>
+    </div>
+
+    <div class="input-container">
+        <input type="text" id="commentInput" class="comment-input" placeholder="Add a comment..." />
+    </div>
+</div>
+
+<button class="comment-button" onclick="toggleComments()">💬</button>
+
+<script>
+    const video = document.getElementById('video');
+    const commentInput = document.getElementById('commentInput');
+    const commentsDiv = document.getElementById('comments');
+    const commentsContainer = document.getElementById('commentsContainer');
+
+    function togglePlay() {
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    }
+
+    function toggleComments() {
+        if (commentsContainer.style.display === 'none' || commentsContainer.style.display === '') {
+            commentsContainer.style.display = 'flex'; // Show comments
+        } else {
+            commentsContainer.style.display = 'none'; // Hide comments
+        }
+    }
+
+    function submitComment() {
+        const text = commentInput.value.trim();
+        if (text !== '') {
+            addComment(text);
+            commentInput.value = ''; // Clear the input field
+        }
+    }
+
+    commentInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            submitComment(); // Allow Enter key to submit comment
+        }
+    });
+
+    function addComment(text) {
+        const comment = document.createElement('div');
+        comment.className = 'comment';
+
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar';
+
+        const commentContent = document.createElement('div');
+        commentContent.className = 'comment-content';
+
+        const author = document.createElement('span');
+        author.className = 'comment-author';
+        author.textContent = 'User:';
+
+        const commentText = document.createElement('span');
+        commentText.className = 'comment-text';
+        commentText.textContent = ' ' + text;
+
+        const timestamp = document.createElement('span');
+        timestamp.className = 'timestamp';
+        timestamp.textContent = '• Just now';
+
+        commentContent.appendChild(author);
+        commentContent.appendChild(commentText);
+        commentContent.appendChild(timestamp);
+        comment.appendChild(avatar);
+        comment.appendChild(commentContent);
+        commentsDiv.appendChild(comment);
+        commentsDiv.scrollTop = commentsDiv.scrollHeight; // Scroll to the bottom
+    }
+
+    function addEmoji(emoji) {
+        commentInput.value += emoji;  // Append emoji to the input field
+        commentInput.focus(); // Set focus back to the input field
+    }
+</script>
+
+</body>
+</html>
