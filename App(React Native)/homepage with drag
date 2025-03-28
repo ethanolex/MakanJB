@@ -1,0 +1,411 @@
+import React, { useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
+
+const DraggableItem = ({ id, icon, label, index, moveItem }) => {
+  const [, ref] = useDrag({
+    type: "ITEM",
+    item: { id, index },
+  });
+
+  const [, drop] = useDrop({
+    accept: "ITEM",
+    hover: (draggedItem) => {
+      if (draggedItem.index !== index) {
+        moveItem(draggedItem.index, index);
+        draggedItem.index = index;
+      }
+    },
+  });
+
+  return (
+    <div
+      ref={(node) => ref(drop(node))}
+      style={{ cursor: "move", textAlign: "center" }}
+    >
+      <span className="icon-button">
+        <a href="#">
+          <img src={icon} width="50" alt={label} />
+        </a>
+      </span>
+      <smaller>{label}</smaller>
+    </div>
+  );
+};
+
+function App() {
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      icon: "https://cdn-icons-png.flaticon.com/512/4899/4899162.png",
+      label: "Durian",
+    },
+    {
+      id: 2,
+      icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPPFzvQj0hAYphYrCYFz26bFaOpNvOUAQcRw&s",
+      label: "Ramly Burger",
+    },
+    {
+      id: 3,
+      icon: "https://cdn-icons-png.flaticon.com/512/1596/1596389.png",
+      label: "Pharmacy",
+    },
+    {
+      id: 4,
+      icon: "https://cdn-icons-png.flaticon.com/512/2584/2584785.png",
+      label: "Curtain",
+    },
+    {
+      id: 5,
+      icon: "https://cdn-icons-png.flaticon.com/512/2503/2503508.png",
+      label: "Movies/Cinema",
+    },
+    {
+      id: 6,
+      icon: "https://cdn-icons-png.flaticon.com/512/3082/3082055.png",
+      label: "Seafood",
+    },
+    {
+      id: 7,
+      icon: "https://cdn-icons-png.flaticon.com/512/5323/5323820.png",
+      label: "Food",
+    },
+    {
+      id: 8,
+      icon: "https://cdn-icons-png.flaticon.com/512/3082/3082011.png",
+      label: "Grocery Shopping",
+    },
+    {
+      id: 9,
+      icon: "https://cdn-icons-png.flaticon.com/512/1986/1986244.png",
+      label: "Massage",
+    },
+    {
+      id: 10,
+      icon: "https://cdn-icons-png.flaticon.com/512/1941/1941173.png",
+      label: "Nail Manicure",
+    },
+    {
+      id: 11,
+      icon: "https://cdn-icons-png.flaticon.com/512/452/452705.png",
+      label: "Salon",
+    },
+    {
+      id: 12,
+      icon: "https://cdn-icons-png.flaticon.com/512/5766/5766409.png",
+      label: "Fun",
+    },
+    {
+      id: 13,
+      icon: "https://cdn-icons-png.flaticon.com/512/5617/5617415.png",
+      label: "Optical",
+    },
+    {
+      id: 14,
+      icon: "https://cdn-icons-png.flaticon.com/512/2679/2679339.png",
+      label: "Dental",
+    },
+    {
+      id: 15,
+      icon: "https://cdn-icons-png.flaticon.com/512/5501/5501060.png",
+      label: "Aesthetic Clinic",
+    },
+    {
+      id: 16,
+      icon: "https://cdn-icons-png.flaticon.com/512/995/995260.png",
+      label: "Transport",
+    },
+    {
+      id: 17,
+      icon: "https://cdn-icons-png.flaticon.com/512/13191/13191522.png",
+      label: "Pub Karaoke",
+    },
+    {
+      id: 18,
+      icon: "https://cdn-icons-png.flaticon.com/512/1144/1144264.png",
+      label: "Car Wash",
+    },
+    {
+      id: 19,
+      icon: "https://cdn-icons-png.flaticon.com/512/414/414324.png",
+      label: "Physio Chiropractic",
+    },
+    {
+      id: 20,
+      icon: "https://cdn-icons-png.flaticon.com/512/862/862819.png",
+      label: "Pasar Malam",
+    },
+    {
+      id: 21,
+      icon: "https://cdn-icons-png.flaticon.com/512/5781/5781883.png",
+      label: "Furniture",
+    },
+    {
+      id: 22,
+      icon: "https://cdn-icons-png.flaticon.com/512/1447/1447159.png",
+      label: "Cafe",
+    },
+    {
+      id: 23,
+      icon: "https://cdn-icons-png.flaticon.com/512/3321/3321597.png",
+      label: "Must Eats",
+    },
+    {
+      id: 24,
+      icon: "https://cdn-icons-png.flaticon.com/512/5559/5559146.png",
+      label: "Free Trial",
+    },
+    {
+      id: 25,
+      icon: "https://cdn-icons-png.flaticon.com/256/11678/11678917.png",
+      label: "Super Deals",
+    },
+    {
+      id: 26,
+      icon: "https://cdn-icons-png.flaticon.com/512/5432/5432842.png",
+      label: "Food Bloggers",
+    },
+    {
+      id: 27,
+      icon: "https://cdn-icons-png.flaticon.com/512/14018/14018852.png",
+      label: "My Favorites",
+    },
+    {
+      id: 28,
+      icon: "https://cdn-icons-png.flaticon.com/512/2038/2038263.png",
+      label: "Hotel/Airbnb",
+    },
+    {
+      id: 29,
+      icon: "https://cdn-icons-png.flaticon.com/512/291/291445.png",
+      label: "Theme Parks",
+    },
+    {
+      id: 30,
+      icon: "https://cdn-icons-png.flaticon.com/512/1683/1683726.png",
+      label: "Buffets",
+    },
+    {
+      id: 31,
+      icon: "https://cdn-icons-png.flaticon.com/512/12193/12193825.png",
+      label: "Health Screening",
+    },
+    {
+      id: 32,
+      icon: "https://cdn-icons-png.flaticon.com/512/673/673561.png",
+      label: "TCM",
+    },
+    {
+      id: 33,
+      icon: "https://cdn-icons-png.flaticon.com/512/1318/1318508.png",
+      label: "Lok Lok",
+    },
+    {
+      id: 34,
+      icon: "https://cdn-icons-png.flaticon.com/512/9126/9126605.png",
+      label: "Hotpot",
+    },
+    {
+      id: 35,
+      icon: "https://cdn-icons-png.flaticon.com/512/2548/2548670.png",
+      label: "Direct Products from the Farm",
+    },
+    {
+      id: 36,
+      icon: "https://cdn-icons-png.flaticon.com/512/2641/2641391.png",
+      label: "Confinement Services",
+    },
+    {
+      id: 37,
+      icon: "https://cdn-icons-png.flaticon.com/512/838/838616.png",
+      label: "Wedding Photo",
+    },
+  ]);
+
+  const moveItem = (fromIndex, toIndex) => {
+    const updatedItems = [...items];
+    const [movedItem] = updatedItems.splice(fromIndex, 1);
+    updatedItems.splice(toIndex, 0, movedItem);
+    setItems(updatedItems);
+  };
+
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div>
+        <style>{`
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+          }
+
+          header {
+            background-color: #FCF7F3;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+          }
+
+          nav {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+          }
+
+          nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+          }
+
+          main {
+            padding: 20px;
+          }
+
+          footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+          }
+
+          .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+          }
+
+          .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+          }
+
+          input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 16px;
+          }
+
+          button {
+            width: 20%;
+            padding: 10px;
+            background-color: #ff6e40;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+          }
+
+          ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+          }
+
+          li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+          }
+
+          li:hover {
+            background-color: #e0e0e0;
+          }
+
+          .icon-button {
+            background: #f2f2f2;
+            text-align: center;
+            margin: 55px;
+            width: 75px;
+            height: 75px;
+            border-radius: 20%;
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-size: 35px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px;
+            margin-bottom: 0;
+          }
+
+          .icon-button:hover {
+            background-color: #d9d9d9;
+            color: white;
+          }
+
+          .meow {
+            display: grid;
+            justify-content: center;
+            grid-template-columns: 200px 200px 200px 200px;
+            grid-gap: 0px;
+            margin-bottom: 30px;
+          }
+
+          .meow > div {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+          }
+
+          smaller {
+            font-size: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          }
+        `}</style>
+
+        <header>
+          <a href="https://www.example.com">
+            <img
+              src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"
+              alt="Logo"
+            />
+          </a>
+        </header>
+        <nav>
+          <a href="#">Food</a>
+          <a href="#">Shopping</a>
+          <a href="#">Massage</a>
+          <a href="#">Fun</a>
+          <a href="#">Salon/Nail</a>
+          <a href="#">Hotel</a>
+          <a href="#">Delivery</a>
+        </nav>
+
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="meow">
+            {items.map((item, index) => (
+              <DraggableItem
+                key={item.id}
+                id={item.id}
+                icon={item.icon}
+                label={item.label}
+                index={index}
+                moveItem={moveItem}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </DndProvider>
+  );
+}
+
+export default App;
