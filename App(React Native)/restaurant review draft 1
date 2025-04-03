@@ -1,0 +1,234 @@
+import React from 'react';
+
+const RestaurantReviews = () => {
+  return (
+    <div style={{ height: '100vh', overflow: 'auto' }}>
+      <style>
+        {`
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+          }
+          header {
+            background-color: #FCF7F3;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+          }
+          nav {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+          }
+          nav a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 10px;
+          }       
+          .rating-container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+          }
+          .rating-container .meow {
+            display: grid;
+            grid-template-columns: 150px 580px;
+            grid-gap: = 500px;
+            justify-content: center;
+            margin-bottom: 30px;  
+          }
+          .average-rating {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            text-align: center;
+          }
+          .star {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+          }
+          .star-label {
+            width: 30px;
+            font-size: 1.2em;
+          }
+          .bar {
+            flex: 1;
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            margin-left: 10px;
+            position: relative;
+          }
+          .filled {
+            background: #4CAF50;
+            border-radius: 10px;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .review-count {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+          }        
+          .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+          }
+          .review-card {
+            background: #FCF7F3;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+          }
+          .review-card:last-child {
+            border-bottom: none;
+          }
+          .review-card h2 {
+            margin-top: 0;
+          }
+          .review-card p {
+            margin: 10px 0;
+          }
+          .review-card .rating {
+            font-weight: bold;
+            color: #ff9800;
+          }
+          .rating[data-stars="1"],
+          .rating[data-stars="2"] {
+            color: rgb(186, 0, 0);
+          }
+          .rating[data-stars="3"] {
+            color: #d72a2a;
+          }
+          .rating[data-stars="4"],
+          .rating[data-stars="5"] {
+            color: #FF6B6B; 
+          }
+          footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+          }
+        `}
+      </style>
+
+      <header>
+        <a href='home_page.html'>
+          <img src="https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png" alt="Logo" />
+        </a>
+      </header>
+      <nav>
+        <a href="food_page_draft.html">Food</a>
+        <a href="shopping_page_draft.html">Shopping</a>
+        <a href="#">Massage</a>
+        <a href="fun_page_draft.html">Fun</a>
+        <a href="#">Salon/Nail</a>
+        <a href="#">Hotel</a>
+        <a href="#">Delivery</a>
+      </nav>
+
+      <div style={{ padding: '0 20px' }}>
+        <a style={{color: 'black'}} href="restaurant_details_draft.html">Back</a>
+      </div>
+      
+      <div className="container">
+        <h1>Warakuya Japanese Garden</h1>
+        <div className="rating-container">
+          <div className="meow">
+            <p><strong style={{color: '#4CAF50', fontSize: '65px'}}>4.6</strong><br /><br /><span className="review-count">500+ reviews</span></p>
+            <p>
+              <span className="star">
+                <span className="star-label">5</span>
+                <span className="bar">
+                  <span className="filled" style={{width: '90%'}}></span>
+                </span>
+              </span>
+              <span className="star">
+                <span className="star-label">4</span>
+                <span className="bar">
+                  <span className="filled" style={{width: '70%'}}></span>
+                </span>
+              </span>
+              <span className="star">
+                <span className="star-label">3</span>
+                <span className="bar">
+                  <span className="filled" style={{width: '40%'}}></span>
+                </span>
+              </span>
+              <span className="star">
+                <span className="star-label">2</span>
+                <span className="bar">
+                  <span className="filled" style={{width: '20%'}}></span>
+                </span>
+              </span>
+              <span className="star">
+                <span className="star-label">1</span>
+                <span className="bar">
+                  <span className="filled" style={{width: '10%'}}></span>
+                </span>
+              </span>
+            </p>
+          </div>
+        </div>    
+
+        <div className="review-card">
+          <p style={{color: 'grey', fontSize: '20px'}}>User123</p>
+          <h2>Exceptional Dining Experience!</h2>
+          <p className="rating" data-stars="4" style={{fontSize: '20px'}}>★★★★☆</p>
+          <p>I had an amazing time at this restaurant. The food was delicious, the service was impeccable, and the atmosphere was simply perfect. I would highly recommend it to anyone looking for a truly exceptional dining experience.</p>
+          <img src="https://fastly.4sqi.net/img/general/600x600/127599666_TP8Vj_Rh2dLZ03HygI3meXEIulx26QcaM__dZcB4RJs.jpg" width='150' alt="Restaurant" />
+          <img src="https://sethlui.com/wp-content/uploads/2017/07/Warakuya-10-800x534.jpg" width='225' alt="Restaurant food" />
+        </div>
+
+        <div className="review-card">
+          <p style={{color: 'grey', fontSize: '20px'}}>User456</p>
+          <h2>Fantastic Service and Ambiance</h2>
+          <p className="rating" data-stars="5" style={{fontSize: '20px'}}>★★★★★</p>
+          <p>I was thoroughly impressed with this restaurant. The staff was friendly and attentive, and the overall ambiance was simply wonderful. The food was also top-notch, making this a dining experience I won't soon forget.</p>
+          <img src="https://2.bp.blogspot.com/-0unvCZHVcSs/VACxRe6OOBI/AAAAAAAAAj4/rsGS84f5Skw/s1600/IMG_8117.JPG" width='200' alt="Restaurant interior" />
+          <img src="https://fastly.4sqi.net/img/general/600x600/10463680_2ArBAwLHtcoyQX5GwkrRrQGplUyi_qV8_hYM7kOMvLY.jpg" width='150' alt="Restaurant dish" />
+        </div>
+
+        <div className="review-card">
+          <p style={{color: 'grey', fontSize: '20px'}}>User789</p>
+          <h2>Delicious and Innovative Cuisine</h2>
+          <p className="rating" data-stars="3" style={{fontSize: '20px'}}>★★★☆☆</p>
+          <p>This restaurant has quickly become one of my favorites. The menu is creative and the dishes are absolutely delicious. The presentation is also impeccable, making for a truly memorable dining experience.</p>
+          <img src="https://demwvw9lpu8ak.cloudfront.net/attachments/2d91e97ab07919fef786b6cb489849cdb27a708c/store/41e53eaa328ce4f78313425b39af30918d1eedac87ff81765dc1d8b96548/attached_image" width='150' alt="Restaurant dish" />
+        </div>
+
+        <div className="review-card">
+          <p style={{color: 'grey', fontSize: '20px'}}>Anonymous</p>
+          <h2>Friendly service and Yummy Dishes</h2>
+          <p className="rating" data-stars="4" style={{fontSize: '20px'}}>★★★★☆</p>
+          <p>Excellent seafood dishes! The grilled salmon was cooked to perfection, and the staff was friendly.</p>
+          <img src="https://fastly.4sqi.net/img/general/200x200/10463680_AJAb4ECFDab7zfmrhF6dfs8PDyw3vFPLx27Ih3MnwOc.jpg" width='150' alt="Restaurant dish" />
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiOK0kRhnXJC6SJyBlTSY4RxHuwiAqUCi8neVy-rU-SusqJJvEqx2sxqoaaGI2HmUagqEZM09iJZq6bd-3eUaqICLH5yiNveIsc80_odkjQnqMmlTEHFdL3UFBGyTFj2uDsV0zulvTwKX0/s600/a8.png" width='265' alt="Restaurant dish" />
+        </div>
+
+        <div className="review-card">
+          <p style={{color: 'grey', fontSize: '20px'}}>User101</p>
+          <h2>Perfect Place for Light Lunch</h2>
+          <p className="rating" data-stars="4" style={{fontSize: '20px'}}>★★★★☆</p>
+          <p>A great spot for brunch. The pancakes were fluffy and delicious, and the coffee was top-notch!</p>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyscQJhjzeZMS07uzw23qgjCTTHaBvoJA1gw&s" width='150' alt="Restaurant dish" />
+        </div>
+      </div>
+
+      <footer>
+        <p>&copy; 2024 MakanJB</p>
+      </footer>
+    </div>
+  );
+};
+
+export default RestaurantReviews;
