@@ -1,0 +1,181 @@
+import React, { useState } from "react";
+
+const App = () => {
+  const [comments, setComments] = useState([
+    {
+      username: "babyyouraki",
+      text: "A little Maple Puppy appreciation post to sweeten your day! ❤️",
+      date: "2024-01-23",
+    },
+    {
+      username: "tiff.cook24",
+      text: "They're always meant to find each other! 🥰",
+      date: "2024-01-22",
+    },
+    {
+      username: "masterchong",
+      text: "Omg baby animals are sooo adorable! 😍",
+      date: "2024-01-21",
+    },
+  ]);
+
+  const [username, setUsername] = useState("");
+  const [commentText, setCommentText] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const newComment = {
+      username,
+      text: commentText,
+      date: new Date().toLocaleDateString(),
+    };
+    setComments([...comments, newComment]);
+    setUsername("");
+    setCommentText("");
+  };
+
+  const styles = {
+    body: {
+      fontFamily: "Arial, sans-serif",
+      margin: 0,
+      padding: "20px",
+      backgroundColor: "#f4f4f4",
+      display: "flex",
+      justifyContent: "center",
+    },
+    container: {
+      display: "flex",
+      maxWidth: "800px",
+      width: "100%",
+      background: "white",
+      borderRadius: "8px",
+      boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+    },
+    videoSection: {
+      flex: 2,
+      padding: "10px",
+    },
+    video: {
+      width: "100%",
+      borderRadius: "8px",
+    },
+    commentsSection: {
+      flex: 1,
+      borderLeft: "1px solid #ddd",
+      padding: "10px",
+      maxHeight: "500px",
+      overflowY: "auto",
+    },
+    comment: {
+      marginBottom: "15px",
+      padding: "10px",
+      background: "#f9f9f9",
+      borderRadius: "5px",
+    },
+    commentH3: {
+      margin: "0 0 5px",
+      fontSize: "1em",
+      color: "#333",
+    },
+    commentP: {
+      margin: 0,
+      fontSize: "0.9em",
+      color: "#555",
+    },
+    commentInfo: {
+      fontSize: "0.8em",
+      color: "#888",
+    },
+    likes: {
+      fontSize: "0.9em",
+      color: "#999",
+      marginTop: "10px",
+    },
+    commentForm: {
+      marginTop: "20px",
+      display: "flex",
+      flexDirection: "column",
+    },
+    formInput: {
+      marginBottom: "10px",
+      padding: "10px",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+    },
+    formButton: {
+      padding: "10px",
+      backgroundColor: "#007bff",
+      color: "white",
+      border: "none",
+      borderRadius: "4px",
+      cursor: "pointer",
+    },
+    formButtonHover: {
+      backgroundColor: "#0056b3",
+    },
+  };
+
+  return (
+    <div style={styles.body}>
+      <div style={styles.container}>
+        <div style={styles.videoSection}>
+          <video controls style={styles.video}>
+            <source
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div style={styles.commentsSection}>
+          <h2>Comments</h2>
+          <div id="commentsContainer">
+            {comments.map((comment, index) => (
+              <div style={styles.comment} key={index}>
+                <h3 style={styles.commentH3}>{comment.username}</h3>
+                <p style={styles.commentP}>{comment.text}</p>
+                <div style={styles.commentInfo}>{comment.date}</div>
+              </div>
+            ))}
+          </div>
+          <div style={styles.likes}>7,238 likes</div>
+
+          <form style={styles.commentForm} onSubmit={handleSubmit}>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Your Name"
+              required
+              style={styles.formInput}
+            />
+            <textarea
+              rows="3"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              placeholder="Add a comment..."
+              required
+              style={styles.formInput}
+            />
+            <button
+              type="submit"
+              style={styles.formButton}
+              onMouseOver={(e) =>
+                (e.target.style.backgroundColor =
+                  styles.formButtonHover.backgroundColor)
+              }
+              onMouseOut={(e) =>
+                (e.target.style.backgroundColor =
+                  styles.formButton.backgroundColor)
+              }
+            >
+              Post Comment
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
