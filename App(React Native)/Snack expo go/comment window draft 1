@@ -1,0 +1,227 @@
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView,
+  Platform,
+  KeyboardAvoidingView
+} from "react-native";
+import { Video } from "expo-av";
+
+const App = () => {
+  const [comments, setComments] = useState([
+    {
+      username: "babyyouraki",
+      text: "A little Maple Puppy appreciation post to sweeten your day! ❤️",
+      date: "2024-01-23",
+    },
+    {
+      username: "tiff.cook24",
+      text: "They're always meant to find each other! 🥰",
+      date: "2024-01-22",
+    },
+    {
+      username: "masterchong",
+      text: "Omg baby animals are sooo adorable! 😍",
+      date: "2024-01-21",
+    },
+    {
+      username: "user123",
+      text: "This is so cute! Can't stop watching!",
+      date: "2024-01-20",
+    },
+    {
+      username: "petlover456",
+      text: "I wish I had a puppy like this!",
+      date: "2024-01-19",
+    },
+    {
+      username: "animalfan",
+      text: "The cuteness overload is real!",
+      date: "2024-01-18",
+    },
+  ]);
+
+  const [username, setUsername] = useState("");
+  const [commentText, setCommentText] = useState("");
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+
+  const handleSubmit = () => {
+    if (!username.trim() || !commentText.trim()) return;
+    
+    const newComment = {
+      username,
+      text: commentText,
+      date: new Date().toLocaleDateString(),
+    };
+    setComments([...comments, newComment]);
+    setUsername("");
+    setCommentText("");
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.keyboardAvoidingView}
+      >
+        <View style={styles.content}>
+          <View style={styles.videoContainer}>
+            <Video
+              ref={video}
+              style={styles.video}
+              source={{
+                uri: "https://www.w3schools.com/html/mov_bbb.mp4",
+              }}
+              useNativeControls
+              resizeMode="contain"
+              isLooping
+              onPlaybackStatusUpdate={setStatus}
+            />
+          </View>
+          
+          <View style={styles.commentsContainer}>
+            <Text style={styles.commentsTitle}>Comments</Text>
+            
+            <ScrollView 
+              style={styles.commentsList}
+              contentContainerStyle={styles.commentsListContent}
+            >
+              {comments.map((comment, index) => (
+                <View style={styles.comment} key={index}>
+                  <Text style={styles.commentUsername}>{comment.username}</Text>
+                  <Text style={styles.commentText}>{comment.text}</Text>
+                  <Text style={styles.commentDate}>{comment.date}</Text>
+                </View>
+              ))}
+            </ScrollView>
+            
+            <Text style={styles.likes}>7,238 likes</Text>
+            
+            <View style={styles.commentForm}>
+              <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
+                placeholder="Your Name"
+                placeholderTextColor="#999"
+              />
+              <TextInput
+                style={[styles.input, styles.textArea]}
+                value={commentText}
+                onChangeText={setCommentText}
+                placeholder="Add a comment..."
+                placeholderTextColor="#999"
+                multiline
+                numberOfLines={3}
+              />
+              <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+                <Text style={styles.submitButtonText}>Post Comment</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f4f4f4",
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+  },
+  videoContainer: {
+    flex: Platform.OS === 'web' ? 2 : undefined,
+    height: Platform.OS === 'web' ? undefined : 250,
+    marginBottom: 10,
+    borderRadius: 8,
+    overflow: 'hidden',
+    backgroundColor: '#000',
+  },
+  video: {
+    width: '100%',
+    height: '100%',
+  },
+  commentsContainer: {
+    flex: 1,
+    padding: 10,
+  },
+  commentsTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  commentsList: {
+    flex: 1,
+  },
+  commentsListContent: {
+    paddingBottom: 20,
+  },
+  comment: {
+    backgroundColor: '#f9f9f9',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  commentUsername: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#333',
+  },
+  commentText: {
+    marginBottom: 5,
+    color: '#555',
+  },
+  commentDate: {
+    fontSize: 12,
+    color: '#888',
+  },
+  likes: {
+    fontSize: 14,
+    color: '#999',
+    marginVertical: 10,
+  },
+  commentForm: {
+    marginTop: 'auto',
+  },
+  input: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    padding: 10,
+    marginBottom: 10,
+    fontSize: 16,
+  },
+  textArea: {
+    minHeight: 80,
+    textAlignVertical: 'top',
+  },
+  submitButton: {
+    backgroundColor: '#007bff',
+    borderRadius: 4,
+    padding: 12,
+    alignItems: 'center',
+  },
+  submitButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+});
+
+export default App;
