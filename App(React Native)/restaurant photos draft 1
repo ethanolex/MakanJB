@@ -1,0 +1,173 @@
+import React, { useState } from 'react';
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal } from 'react-native';
+
+const RestaurantGallery = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalSrc, setModalSrc] = useState('');
+
+  const OpenModal = (src) => {
+    setModalSrc(src);
+    setModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const HandleBackdropClick = (e) => {
+    CloseModal();
+  };
+
+  // Styles
+  const styles = {
+    Body: {
+      fontFamily: 'Montserrat',
+      margin: 0,
+      padding: 0,
+      backgroundColor: '#fffff',
+      flex: 1
+    },
+    Header: {
+      backgroundColor: '#FCF7F3',
+      padding: 20,
+      alignItems: 'center'
+    },
+    Nav: {
+      backgroundColor: '#f2f2f2',
+      padding: 10,
+      flexDirection: 'row',
+      justifyContent: 'center'
+    },
+    NavLink: {
+      color: '#333',
+      textDecoration: 'none',
+      marginHorizontal: 10
+    },
+    BackLink: {
+      color: 'black',
+      padding: 10,
+      paddingLeft: 20
+    },
+    Container: {
+      maxWidth: 900,
+      marginHorizontal: 'auto',
+      padding: 20,
+      paddingBottom: 40
+    },
+    Gallery: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      gap: 20
+    },
+    GalleryImg: {
+      width: 250,
+      height: 350,
+      borderRadius: 4,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 6,
+      margin: 10
+    },
+    GalleryTitle: {
+      fontSize: 36,
+      fontWeight: '700',
+      textAlign: 'center',
+      marginBottom: 40,
+      marginTop: 0
+    },
+    Modal: {
+      flex: 1,
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    ModalImg: {
+      width: '90%',
+      height: '90%',
+      borderRadius: 8,
+      resizeMode: 'contain'
+    },
+    Close: {
+      position: 'absolute',
+      top: 20,
+      right: 40,
+      color: 'white',
+      fontSize: 30
+    }
+  };
+
+  return (
+    <ScrollView style={styles.Body}>
+      <View style={styles.Header}>
+        <TouchableOpacity href='home_page.html'>
+          <Image 
+            source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+            style={{width: 154, height: 154}}
+          />
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.Nav}>
+        <TouchableOpacity><Text style={styles.NavLink}>Food</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Shopping</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Massage</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Fun</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Salon/Nail</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Hotel</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.NavLink}>Delivery</Text></TouchableOpacity>
+      </View>
+      
+      <TouchableOpacity style={styles.BackLink}>
+        <Text>Back</Text>
+      </TouchableOpacity>
+
+      <View style={styles.Container}>
+        <Text style={styles.GalleryTitle}>Warakuya Japanese Garden</Text>
+        <View style={styles.Gallery}>
+          {[
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/42/b2/0b/yumyum.jpg?w=500&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a6/39/52/20190228-200728-largejpg.jpg?w=600&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4c/c9/table-setting.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4b/bb/outside-view-of-the-restaurant.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4c/56/tasty-to-fu.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/84/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/82/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/81/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/56/4c/2c/photo4jpg.jpg?w=500&h=-1&s=1",
+          ].map((src, index) => (
+            <TouchableOpacity key={index} onPress={() => OpenModal(src)}>
+              <Image
+                source={{uri: src}}
+                style={styles.GalleryImg}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      <Modal
+        visible={modalOpen}
+        transparent={true}
+        onRequestClose={CloseModal}
+      >
+        <TouchableOpacity 
+          style={styles.Modal} 
+          activeOpacity={1}
+          onPress={HandleBackdropClick}
+        >
+          <TouchableOpacity style={styles.Close} onPress={CloseModal}>
+            <Text style={{color: 'white', fontSize: 30}}>×</Text>
+          </TouchableOpacity>
+          <Image 
+            source={{uri: modalSrc}}
+            style={styles.ModalImg}
+          />
+        </TouchableOpacity>
+      </Modal>
+    </ScrollView>
+  );
+};
+
+export default RestaurantGallery;
