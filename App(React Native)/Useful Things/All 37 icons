@@ -1,0 +1,185 @@
+    {
+      id: '1',
+      icon: 'https://cdn-icons-png.flaticon.com/512/4899/4899162.png',
+      label: 'Durian',
+    },
+    {
+      id: '2',
+      icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPPFzvQj0hAYphYrCYFz26bFaOpNvOUAQcRw&s',
+      label: 'Ramly Burger',
+    },
+    {
+      id: '3',
+      icon: 'https://cdn-icons-png.flaticon.com/512/1596/1596389.png',
+      label: 'Pharmacy',
+    },
+    {
+      id: '4',
+      icon: 'https://cdn-icons-png.flaticon.com/512/2584/2584785.png',
+      label: 'Curtain',
+    },
+    {
+      id: '5',
+      icon: 'https://cdn-icons-png.flaticon.com/512/2503/2503508.png',
+      label: 'Movies/Cinema',
+    },
+    {
+      id: '6',
+      icon: 'https://cdn-icons-png.flaticon.com/512/3082/3082055.png',
+      label: 'Seafood',
+    },
+    {
+      id: '7',
+      icon: 'https://cdn-icons-png.flaticon.com/512/5323/5323820.png',
+      label: 'Food',
+    },
+    {
+      id: '8',
+      icon: 'https://cdn-icons-png.flaticon.com/512/3082/3082011.png',
+      label: 'Grocery Shopping',
+    },
+    {
+      id: '9',
+      icon: 'https://cdn-icons-png.flaticon.com/512/1986/1986244.png',
+      label: 'Massage',
+    },
+    {
+      id: '10',
+      icon: 'https://cdn-icons-png.flaticon.com/512/1941/1941173.png',
+      label: 'Nail Manicure',
+    },
+    {
+      id: '11',
+      icon: 'https://cdn-icons-png.flaticon.com/512/452/452705.png',
+      label: 'Salon',
+    },
+    {
+      id: '12',
+      icon: 'https://cdn-icons-png.flaticon.com/512/5766/5766409.png',
+      label: 'Fun',
+    },
+    {
+      id: '13',
+      icon: 'https://cdn-icons-png.flaticon.com/512/5617/5617415.png',
+      label: 'Optical',
+    },
+    {
+      id: '14',
+      icon: 'https://cdn-icons-png.flaticon.com/512/2679/2679339.png',
+      label: 'Dental',
+    },
+    {
+      id: '15',
+      icon: 'https://cdn-icons-png.flaticon.com/512/5501/5501060.png',
+      label: 'Aesthetic Clinic',
+    },
+    {
+      id: '16',
+      icon: 'https://cdn-icons-png.flaticon.com/512/995/995260.png',
+      label: 'Transport',
+    },
+    {
+      id: '17',
+      icon: 'https://cdn-icons-png.flaticon.com/512/13191/13191522.png',
+      label: 'Pub Karaoke',
+    },
+    {
+      id: '18',
+      icon: 'https://cdn-icons-png.flaticon.com/512/1144/1144264.png',
+      label: 'Car Wash',
+    },
+    {
+      id: '19',
+      icon: 'https://cdn-icons-png.flaticon.com/512/414/414324.png',
+      label: 'Physio Chiropractic',
+    },
+    {
+      id: '20',
+      icon: 'https://cdn-icons-png.flaticon.com/512/862/862819.png',
+      label: 'Pasar Malam',
+    },
+    {
+      id: '21',
+      icon: "https://cdn-icons-png.flaticon.com/512/5781/5781883.png",
+      label: "Furniture",
+    },
+    {
+      id: '22',
+      icon: "https://cdn-icons-png.flaticon.com/512/1447/1447159.png",
+      label: "Cafe",
+    },
+    {
+      id: '23',
+      icon: "https://cdn-icons-png.flaticon.com/512/3321/3321597.png",
+      label: "Must Eats",
+    },
+    {
+      id: '24',
+      icon: "https://cdn-icons-png.flaticon.com/512/5559/5559146.png",
+      label: "Free Trial",
+    },
+    {
+      id: '25',
+      icon: "https://cdn-icons-png.flaticon.com/256/11678/11678917.png",
+      label: "Super Deals",
+    },
+    {
+      id: '26',
+      icon: "https://cdn-icons-png.flaticon.com/512/5432/5432842.png",
+      label: "Food Bloggers",
+    },
+    {
+      id: '27',
+      icon: "https://cdn-icons-png.flaticon.com/512/14018/14018852.png",
+      label: "My Favorites",
+    },
+    {
+      id: '28',
+      icon: "https://cdn-icons-png.flaticon.com/512/2038/2038263.png",
+      label: "Hotel/Airbnb",
+    },
+    {
+      id: '29',
+      icon: "https://cdn-icons-png.flaticon.com/512/291/291445.png",
+      label: "Theme Parks",
+    },
+    {
+      id: '30',
+      icon: "https://cdn-icons-png.flaticon.com/512/1683/1683726.png",
+      label: "Buffets",
+    },
+    {
+      id: '31',
+      icon: "https://cdn-icons-png.flaticon.com/512/12193/12193825.png",
+      label: "Health Screening",
+    },
+    {
+      id: '32',
+      icon: "https://cdn-icons-png.flaticon.com/512/673/673561.png",
+      label: "TCM",
+    },
+    {
+      id: '33',
+      icon: "https://cdn-icons-png.flaticon.com/512/1318/1318508.png",
+      label: "Lok Lok",
+    },
+    {
+      id: '34',
+      icon: "https://cdn-icons-png.flaticon.com/512/9126/9126605.png",
+      label: "Hotpot",
+    },
+    {
+      id: '35',
+      icon: "https://cdn-icons-png.flaticon.com/512/2548/2548670.png",
+      label: "Direct Products from the Farm",
+    },
+    {
+      id: '36',
+      icon: "https://cdn-icons-png.flaticon.com/512/2641/2641391.png",
+      label: "Confinement Services",
+    },
+    {
+      id: '37',
+      icon: "https://cdn-icons-png.flaticon.com/512/838/838616.png",
+      label: "Wedding Photo",
+    },
