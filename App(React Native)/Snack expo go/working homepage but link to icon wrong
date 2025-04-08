@@ -1,0 +1,425 @@
+import React, { useState, useRef } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Animated,
+  PanResponder,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+} from 'react-native';
+
+const GRID_COLUMNS = 3;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const ITEM_WIDTH = SCREEN_WIDTH / GRID_COLUMNS;
+const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
+
+const VISIBLE_ROWS = Math.floor((SCREEN_HEIGHT * 0.7) / ITEM_HEIGHT);
+const ITEMS_PER_PAGE = VISIBLE_ROWS * GRID_COLUMNS;
+
+const RestaurantGallery = ({ onClose }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalSrc, setModalSrc] = useState('');
+
+  const OpenModal = (src) => {
+    setModalSrc(src);
+    setModalOpen(true);
+  };
+
+  const CloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const HandleBackdropClick = (e) => {
+    CloseModal();
+  };
+
+  return (
+    <ScrollView style={styles.galleryBody}>
+      <View style={styles.galleryHeader}>
+        <TouchableOpacity onPress={onClose}>
+          <Image 
+            source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+            style={{width: 154, height: 154}}
+          />
+        </TouchableOpacity>
+      </View>
+      
+      <View style={styles.galleryNav}>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Food</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Shopping</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Massage</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Fun</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Salon/Nail</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Hotel</Text></TouchableOpacity>
+        <TouchableOpacity><Text style={styles.galleryNavLink}>Delivery</Text></TouchableOpacity>
+      </View>
+      
+      <TouchableOpacity style={styles.galleryBackLink} onPress={onClose}>
+        <Text>Back</Text>
+      </TouchableOpacity>
+
+      <View style={styles.galleryContainer}>
+        <Text style={styles.galleryTitle}>Warakuya Japanese Garden</Text>
+        <View style={styles.galleryGrid}>
+          {[
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/42/b2/0b/yumyum.jpg?w=500&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a6/39/52/20190228-200728-largejpg.jpg?w=600&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4c/c9/table-setting.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4b/bb/outside-view-of-the-restaurant.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a4/4c/56/tasty-to-fu.jpg?w=1400&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/84/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/82/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/26/c2/e3/81/caption.jpg?w=1100&h=-1&s=1",
+            "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/56/4c/2c/photo4jpg.jpg?w=500&h=-1&s=1",
+          ].map((src, index) => (
+            <TouchableOpacity key={index} onPress={() => OpenModal(src)}>
+              <Image
+                source={{uri: src}}
+                style={styles.galleryImage}
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      <Modal
+        visible={modalOpen}
+        transparent={true}
+        onRequestClose={CloseModal}
+      >
+        <TouchableOpacity 
+          style={styles.galleryModal} 
+          activeOpacity={1}
+          onPress={HandleBackdropClick}
+        >
+          <TouchableOpacity style={styles.galleryClose} onPress={CloseModal}>
+            <Text style={{color: 'white', fontSize: 30}}>×</Text>
+          </TouchableOpacity>
+          <Image 
+            source={{uri: modalSrc}}
+            style={styles.galleryModalImage}
+          />
+        </TouchableOpacity>
+      </Modal>
+    </ScrollView>
+  );
+};
+
+const App = () => {
+  const allItems = [
+    { 
+      id: '1', 
+      icon: 'https://cdn-icons-png.flaticon.com/512/4899/4899162.png', 
+      label: 'Durian',
+    },
+    { 
+      id: '2', 
+      icon: 'https://cdn-icons-png.flaticon.com/512/2830/2830305.png', 
+      label: 'Ramly Burger',
+    },
+    // Add more items...
+  ].slice(0, ITEMS_PER_PAGE);
+
+  const [items, setItems] = useState(allItems);
+  const [draggedIndex, setDraggedIndex] = useState(-1);
+  const [showGallery, setShowGallery] = useState(false);
+  const pan = useRef(new Animated.ValueXY()).current;
+  const containerRef = useRef();
+
+  const handleIconPress = () => {
+    setShowGallery(true);
+  };
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderGrant: (evt) => {
+      containerRef.current.measure((x, y, width, height, pageX, pageY) => {
+        const touchX = evt.nativeEvent.pageX - pageX;
+        const touchY = evt.nativeEvent.pageY - pageY;
+        
+        const col = Math.floor(touchX / ITEM_WIDTH);
+        const row = Math.floor(touchY / ITEM_HEIGHT);
+        const index = row * GRID_COLUMNS + col;
+        
+        if (index >= 0 && index < items.length) {
+          setDraggedIndex(index);
+          pan.setValue({
+            x: touchX - (col * ITEM_WIDTH) - (ITEM_WIDTH / 2),
+            y: touchY - (row * ITEM_HEIGHT) - (ITEM_HEIGHT / 2)
+          });
+        }
+      });
+    },
+    onPanResponderMove: (evt, gestureState) => {
+      if (draggedIndex >= 0) {
+        pan.setValue({
+          x: gestureState.dx,
+          y: gestureState.dy
+        });
+      }
+    },
+    onPanResponderRelease: () => {
+      if (draggedIndex >= 0) {
+        const currentX = (draggedIndex % GRID_COLUMNS) * ITEM_WIDTH + pan.x._value;
+        const currentY = Math.floor(draggedIndex / GRID_COLUMNS) * ITEM_HEIGHT + pan.y._value;
+        
+        const newCol = Math.round(currentX / ITEM_WIDTH);
+        const newRow = Math.round(currentY / ITEM_HEIGHT);
+        const newIndex = Math.min(newRow * GRID_COLUMNS + newCol, items.length - 1);
+        
+        if (newIndex !== draggedIndex) {
+          const newItems = [...items];
+          const [removed] = newItems.splice(draggedIndex, 1);
+          newItems.splice(newIndex, 0, removed);
+          setItems(newItems);
+        }
+        
+        setDraggedIndex(-1);
+        pan.setValue({ x: 0, y: 0 });
+      }
+    },
+  });
+
+  if (showGallery) {
+    return <RestaurantGallery onClose={() => setShowGallery(false)} />;
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Image
+          source={{ uri: 'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png' }}
+          style={styles.logo}
+        />
+      </View>
+      
+      {/* Compact Navigation Bar */}
+      <View style={styles.navContainer}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.navContent}
+        >
+          {['Food', 'Shopping', 'Massage', 'Fun', 'Salon/Nail', 'Hotel', 'Delivery', 'Health', 'Services'].map((item) => (
+            <TouchableOpacity key={item} style={styles.navLink}>
+              <Text style={styles.navLinkText}>{item}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* Draggable Grid */}
+      <View 
+        ref={containerRef}
+        style={[styles.grid, { height: VISIBLE_ROWS * ITEM_HEIGHT }]} 
+        {...panResponder.panHandlers}
+      >
+        {items.map((item, index) => {
+          const row = Math.floor(index / GRID_COLUMNS);
+          const col = index % GRID_COLUMNS;
+          
+          if (index === draggedIndex) {
+            return (
+              <Animated.View
+                key={item.id}
+                style={[
+                  styles.itemContainer,
+                  {
+                    left: col * ITEM_WIDTH,
+                    top: row * ITEM_HEIGHT,
+                    transform: pan.getTranslateTransform(),
+                    zIndex: 10,
+                  }
+                ]}
+              >
+                <TouchableOpacity 
+                  style={styles.iconButton}
+                  onPress={handleIconPress}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.iconBox}>
+                    <Image source={{ uri: item.icon }} style={styles.iconImage} />
+                  </View>
+                  <Text style={styles.iconLabel}>{item.label}</Text>
+                </TouchableOpacity>
+              </Animated.View>
+            );
+          }
+          
+          return (
+            <View
+              key={item.id}
+              style={[
+                styles.itemContainer,
+                {
+                  left: col * ITEM_WIDTH,
+                  top: row * ITEM_HEIGHT,
+                }
+              ]}
+            >
+              <TouchableOpacity 
+                style={styles.iconButton}
+                onPress={handleIconPress}
+                activeOpacity={0.7}
+              >
+                <View style={styles.iconBox}>
+                  <Image source={{ uri: item.icon }} style={styles.iconImage} />
+                </View>
+                <Text style={styles.iconLabel}>{item.label}</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
+    padding: 12,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 90,
+    height: 90,
+  },
+  navContainer: {
+    backgroundColor: '#f2f2f2',
+    paddingVertical: 6,
+    height: 40,
+  },
+  navContent: {
+    paddingHorizontal: 8,
+    alignItems: 'center',
+  },
+  navLink: {
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+  },
+  navLinkText: {
+    color: '#333',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  grid: {
+    width: '100%',
+    position: 'relative',
+  },
+  itemContainer: {
+    position: 'absolute',
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
+    alignItems: 'center',
+    padding: 8,
+  },
+  iconButton: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  iconBox: {
+    backgroundColor: '#f2f2f2',
+    width: 70,
+    height: 70,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  iconImage: {
+    width: 40,
+    height: 40,
+  },
+  iconLabel: {
+    fontSize: 12,
+    textAlign: 'center',
+    paddingHorizontal: 2,
+    marginTop: 4,
+  },
+  // Gallery Styles
+  galleryBody: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+  },
+  galleryHeader: {
+    backgroundColor: '#FCF7F3',
+    padding: 20,
+    alignItems: 'center'
+  },
+  galleryNav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  galleryNavLink: {
+    color: '#333',
+    marginHorizontal: 10,
+    fontSize: 14,
+  },
+  galleryBackLink: {
+    color: 'black',
+    padding: 10,
+    paddingLeft: 20
+  },
+  galleryContainer: {
+    padding: 20,
+    paddingBottom: 40
+  },
+  galleryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 20
+  },
+  galleryImage: {
+    width: 250,
+    height: 350,
+    borderRadius: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    margin: 10
+  },
+  galleryTitle: {
+    fontSize: 36,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 40,
+    marginTop: 0
+  },
+  galleryModal: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  galleryModalImage: {
+    width: '90%',
+    height: '90%',
+    borderRadius: 8,
+    resizeMode: 'contain'
+  },
+  galleryClose: {
+    position: 'absolute',
+    top: 20,
+    right: 40,
+    color: 'white',
+    fontSize: 30
+  }
+});
+
+export default App;
