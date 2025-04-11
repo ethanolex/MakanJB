@@ -1,0 +1,400 @@
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, Linking, Dimensions, TouchableOpacity, Platform, Alert } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+const App = () => {
+  const handleImagePress = () => {
+    Linking.openURL('restaurant_photo.html');
+  };
+
+  const checkScrollEnd = (e) => {
+    const { contentOffset, layoutMeasurement, contentSize } = e.nativeEvent;
+    if (contentOffset.x + layoutMeasurement.width >= contentSize.width) {
+      // Handle scroll end
+    }
+  };
+
+  const makePhoneCall = () => {
+    const phoneNumber = '+852 92622099'; // Replace with the actual restaurant number
+    let phoneUrl;
+    
+    if (Platform.OS === 'android') {
+      phoneUrl = `tel:${phoneNumber}`;
+    } else {
+      phoneUrl = `telprompt:${phoneNumber}`;
+    }
+    
+    Linking.canOpenURL(phoneUrl)
+      .then(supported => {
+        if (!supported) {
+          Alert.alert('Error', 'Phone calls are not supported on this device');
+        } else {
+          return Linking.openURL(phoneUrl);
+        }
+      })
+      .catch(err => {
+        console.error('An error occurred', err);
+        Alert.alert('Error', 'Failed to make phone call');
+      });
+  };
+
+  const socialPosts = [
+    { title: '老得慢的女人', description: '人要懂得爱惜自己，保持关心！', likes: 6, comments: 6 },
+    { title: '罗马最大的单品出现了！！', description: '美味的热狗，快来尝尝吧！', likes: 8, comments: 3 },
+    { title: '把脸做好', description: '只需要一个月！戒糖。', likes: 10, comments: 12 },
+    { title: '山蟹喜欢这道菜吗？', description: '一起分享美味，来吧！', likes: 15, comments: 5 }
+  ];
+
+  const buttons = [
+    { 
+      icon: 'https://static-00.iconduck.com/assets.00/call-icon-2047x2048-1v137evf.png', 
+      width: 22, 
+      alt: 'Call',
+      onPress: makePhoneCall
+    },
+    { 
+      icon: 'https://static.vecteezy.com/system/resources/previews/014/455/886/non_2x/share-icon-on-transparent-background-free-png.png', 
+      width: 24, 
+      alt: 'Share',
+      onPress: () => {} 
+    },
+    { 
+      icon: 'https://cdn.iconscout.com/icon/free/png-256/free-directions-1782209-1512759.png?f=webp&w=256', 
+      width: 32, 
+      alt: 'Directions',
+      onPress: () => {} 
+    },
+    { 
+      icon: 'https://cdn.icon-icons.com/icons2/3912/PNG/512/grab_logo_icon_248153.png', 
+      width: 44, 
+      alt: 'Grab',
+      onPress: () => {} 
+    }
+  ];
+
+  return (
+    <ScrollView style={styles.body} contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={styles.header}>
+        <Image 
+          source={{ uri: 'https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png' }}
+          style={{ width: 80, height: 80 }}
+        />
+      </View>
+      
+      <View style={styles.nav}>
+        <Text style={styles.navLink} onPress={() => Linking.openURL('food_page_draft.html')}>Food</Text>
+        <Text style={styles.navLink} onPress={() => Linking.openURL('shopping_page_draft.html')}>Shopping</Text>
+        <Text style={styles.navLink}>Massage</Text>
+        <Text style={styles.navLink} onPress={() => Linking.openURL('fun_page_draft.html')}>Fun</Text>
+        <Text style={styles.navLink}>Salon/Nail</Text>
+        <Text style={styles.navLink}>Hotel</Text>
+        <Text style={styles.navLink}>Delivery</Text>
+      </View>
+
+      <View style={styles.container}>
+        <View style={styles.restaurantDetails}>
+          <View style={styles.restaurantHeader}>
+            <TouchableOpacity onPress={handleImagePress} style={styles.restaurantImageContainer}>
+              <Image 
+                source={{ uri: 'https://lh3.googleusercontent.com/p/AF1QipOCKO_o4KW0WT5SXRxLO-bYwVFLJiklLSUOCcvM=s1360-w1360-h1020' }}
+                style={styles.restaurantImage}
+              />
+            </TouchableOpacity>
+            <View style={styles.restaurantInfo}>
+              <Text style={styles.restaurantName}>Warakuya Japanese Garden</Text>
+              <Text style={styles.cuisineType}>Japanese Cuisine</Text>
+              <Text style={styles.rating}>★★★★☆</Text> 
+            </View>
+          </View>
+
+          <ScrollView 
+            horizontal 
+            style={styles.actionButtonsContainer}
+            showsHorizontalScrollIndicator={false}
+          >
+            {buttons.map((button, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={styles.circleButton}
+                onPress={button.onPress}
+              >
+                <Image 
+                  source={{ uri: button.icon }}
+                  style={{ 
+                    width: button.width,
+                    height: button.width,
+                    resizeMode: 'contain'
+                  }}
+                />
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          <Text style={{ fontSize: 24, fontWeight: '700', marginBottom: 15, paddingHorizontal: 10 }}>Reviews</Text>
+          <ScrollView 
+            horizontal 
+            style={styles.reviewGallery}
+            showsHorizontalScrollIndicator={false}
+            onScroll={checkScrollEnd}
+          >
+            <View style={styles.reviewCard}>
+              <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 8 }}>Exceptional Dining Experience!</Text>
+              <Text style={{ fontSize: 16, color: '#ffa500', marginBottom: 8 }}>★★★★★</Text>
+              <Text style={{ fontSize: 14, marginBottom: 15 }}>I had an amazing time at this restaurant. The food was delicious, the service was impeccable, and the atmosphere was simply perfect.</Text>
+              <View style={{ flexDirection: 'row', gap: 10 }}>
+                <Image 
+                  source={{ uri: 'https://fastly.4sqi.net/img/general/600x600/127599666_TP8Vj_Rh2dLZ03HygI3meXEIulx26QcaM__dZcB4RJs.jpg' }}
+                  style={{ width: 120, height: 120, borderRadius: 6 }}
+                />
+                <Image 
+                  source={{ uri: 'https://sethlui.com/wp-content/uploads/2017/07/Warakuya-10-800x534.jpg' }}
+                  style={{ width: 120, height: 120, borderRadius: 6 }}
+                />
+              </View>
+            </View>
+            
+            <View style={styles.reviewCard}>
+              <Text style={{ fontSize: 18, fontWeight: '700', marginBottom: 8 }}>Fantastic Service and Ambiance</Text>
+              <Text style={{ fontSize: 16, color: '#ffa500', marginBottom: 8 }}>★★★★☆</Text>
+              <Text style={{ fontSize: 14, marginBottom: 15 }}>I was thoroughly impressed with this restaurant. The staff was friendly and attentive, and the overall ambiance was wonderful.</Text>
+              <View style={{ flexDirection: 'row', gap: 10 }}>
+                <Image 
+                  source={{ uri: 'https://2.bp.blogspot.com/-0unvCZHVcSs/VACxRe6OOBI/AAAAAAAAAj4/rsGS84f5Skw/s1600/IMG_8117.JPG' }}
+                  style={{ width: 120, height: 120, borderRadius: 6 }}
+                />
+                <Image 
+                  source={{ uri: 'https://fastly.4sqi.net/img/general/600x600/10463680_2ArBAwLHtcoyQX5GwkrRrQGplUyi_qV8_hYM7kOMvLY.jpg' }}
+                  style={{ width: 120, height: 120, borderRadius: 6 }}
+                />
+              </View>
+            </View>
+          </ScrollView>
+          
+          <Text style={styles.leaveReview} onPress={() => Linking.openURL('review_page_draft.html')}>Leave a review</Text>
+
+          <View style={styles.details}>
+            <View style={styles.detailItem}>
+              <Image 
+                source={{ uri: 'https://akm-img-a-in.tosshub.com/indiatoday/images/bodyeditor/202002/Maps_Pin_FullColor-x1000.png' }}
+                style={{ width: 20, height: 20 }}
+              />
+              <Text>2, Jalan Sutera Tanjung 8/4, Taman Sutera Utama</Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Image 
+                source={{ uri: 'https://www.iconpacks.net/icons/1/free-phone-icon-1-thumb.png' }}
+                style={{ width: 16, height: 16 }}
+              />
+              <Text>(123) 456-7890</Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Image 
+                source={{ uri: 'https://static-00.iconduck.com/assets.00/money-icon-2048x2048-q99hqr89.png' }}
+                style={{ width: 16, height: 16 }}
+              />
+              <Text>RM25 - RM45/pax</Text>
+            </View>
+            <View style={styles.detailItem}>
+              <Image 
+                source={{ uri: 'https://static.thenounproject.com/png/2683718-200.png' }}
+                style={{ width: 16, height: 16 }}
+              />
+              <Text>Mon-Sat: 11am - 10pm, Sun: 12pm - 9pm</Text>
+            </View>
+          </View>
+
+          <Text style={{ fontSize: 24, fontWeight: '700', marginBottom: 15, textAlign: 'center' }}>Featured by Creators</Text>
+          <View style={styles.socialfeed}>
+            {socialPosts.map((post, index) => (
+              <View key={index} style={styles.socialpost}>
+                <Image 
+                  source={{ uri: 'https://via.placeholder.com/250' }}
+                  style={styles.socialpostimg}
+                />
+                <View style={styles.socialpostcontent}>
+                  <Text style={styles.socialposttitle}>{post.title}</Text>
+                  <Text style={styles.socialpostdescription}>{post.description}</Text>
+                  <View style={styles.socialpostinfo}>
+                    <Text style={{ fontSize: 12, color: '#888' }}>{post.likes} Likes</Text>
+                    <Text style={{ fontSize: 12, color: '#888' }}>{post.comments} Comments</Text>
+                  </View>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>© 2024 MakanJB</Text>
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    fontFamily: 'Montserrat',
+    backgroundColor: '#fffff'
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
+    padding: 20,
+    alignItems: 'center'
+  },
+  nav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  navLink: {
+    color: '#333',
+    textDecorationLine: 'none',
+    marginHorizontal: 8,
+    marginVertical: 5,
+    fontSize: 14
+  },
+  container: {
+    flex: 1,
+    width: width,
+    paddingHorizontal: 0
+  },
+  restaurantDetails: {
+    backgroundColor: 'white',
+    padding: 15
+  },
+  restaurantHeader: {
+    alignItems: 'center',
+    marginBottom: 15
+  },
+  restaurantImageContainer: {
+    width: width,
+    height: 250,
+    marginBottom: 15
+  },
+  restaurantImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 0
+  },
+  restaurantInfo: {
+    paddingHorizontal: 10,
+    alignItems: 'center'
+  },
+  restaurantName: {
+    fontSize: 24,
+    marginBottom: 8,
+    fontWeight: '700',
+    textAlign: 'center'
+  },
+  cuisineType: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#555',
+    textAlign: 'center'
+  },
+  rating: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#FF6B6B',
+    marginBottom: 10,
+    textAlign: 'center'
+  },
+  actionButtonsContainer: {
+    flexDirection: 'row',
+    overflow: 'scroll',
+    paddingVertical: 10,
+    marginBottom: 20,
+    gap: 12,
+    paddingLeft: 10
+  },
+  circleButton: {
+    backgroundColor: '#f2f2f2',
+    width: 55,
+    height: 55,
+    borderRadius: 27.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 5
+  },
+  reviewGallery: {
+    flexDirection: 'row',
+    overflow: 'scroll',
+    marginBottom: 20,
+    paddingLeft: 10
+  },
+  reviewCard: {
+    width: width - 40,
+    padding: 15,
+    backgroundColor: '#FCF7F3',
+    borderRadius: 8,
+    marginRight: 15
+  },
+  details: {
+    gap: 12,
+    marginBottom: 20,
+    paddingHorizontal: 10
+  },
+  detailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8
+  },
+  socialfeed: {
+    gap: 15,
+    paddingHorizontal: 10
+  },
+  socialpost: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    width: width - 20,
+    overflow: 'hidden',
+    marginBottom: 15,
+    elevation: 2
+  },
+  socialpostimg: {
+    width: '100%',
+    height: 180
+  },
+  socialpostcontent: {
+    padding: 12
+  },
+  socialposttitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8
+  },
+  socialpostdescription: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 8
+  },
+  socialpostinfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  leaveReview: {
+    color: 'black',
+    textDecorationLine: 'none',
+    fontWeight: 'bold',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    textAlign: 'center'
+  },
+  footer: {
+    backgroundColor: '#333',
+    padding: 15,
+    alignItems: 'center',
+    width: width
+  },
+  footerText: {
+    color: '#fff',
+    fontSize: 14
+  }
+});
+
+export default App;
