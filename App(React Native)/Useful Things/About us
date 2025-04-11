@@ -1,0 +1,179 @@
+// RestaurantGallery.js
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+const App = () => {
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.header}>
+        <Image 
+          source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+          style={{width: 80, height: 80}}
+        />
+      </View>
+      
+      <View style={styles.nav}>
+        <Text style={styles.navLink}>Food</Text>
+        <Text style={styles.navLink}>Shopping</Text>
+        <Text style={[styles.navLink, styles.activeNavLink]}>About us</Text>
+      </View>
+
+      <View style={styles.aboutContainer}>
+        <Text style={styles.aboutTitle}>Our Story</Text>
+        
+        <View style={styles.missionCard}>
+          <Text style={styles.missionText}>
+            MakanJB is a non-profit mobile application that was created with the intention of helping both hungry people and restaurant owners.
+          </Text>
+        </View>
+
+        <View style={styles.problemSolutionContainer}>
+          <View style={styles.problemSection}>
+            <Text style={styles.sectionTitle}>The Problem We Saw</Text>
+            <Text style={styles.sectionText}>
+              We realised that the lack of a restaurant recommendation and review app meant that many hungry people, like us, would often find ourselves wanting to try a new restaurant, yet not knowing which restaurant or what kind of food we were yearning for.
+            </Text>
+          </View>
+
+          <View style={styles.solutionSection}>
+            <Text style={styles.sectionTitle}>Our Solution</Text>
+            <Text style={styles.sectionText}>
+              Our app also aims particularly to help local hawkers and small restaurant business owners, who are often unable to gain attention or recognition from a wider community, thus leaving them, and their food, unknown to most of us. This not only deprives us from the opportunity to enjoy and appreciate their food, but could also lead to financial pressures for the owners due to the lack of customers.
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.closingCard}>
+          <Text style={styles.closingText}>
+            By putting two-and-two together, we strive to help solve these two problems at the same time.
+          </Text>
+        </View>
+
+        <View style={styles.teamIllustration}>
+          <Text style={styles.illustrationText}>👨‍🍳 🤝 🍽️</Text>
+          <Text style={styles.illustrationSubtext}>Connecting food lovers with local chefs</Text>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: '#fffff'
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
+    padding: 20,
+    alignItems: 'center'
+  },
+  nav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  navLink: {
+    color: '#333',
+    textDecorationLine: 'none',
+    marginHorizontal: 8,
+    marginVertical: 5,
+    fontSize: 14
+  },
+  activeNavLink: {
+    fontWeight: 'bold',
+    color: '#E63946',
+    borderBottomWidth: 2,
+    borderBottomColor: '#E63946'
+  },
+  aboutContainer: {
+    padding: 20,
+    paddingBottom: 40
+  },
+  aboutTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#1D3557',
+    textAlign: 'center',
+    marginBottom: 25,
+    fontFamily: 'sans-serif-condensed'
+  },
+  missionCard: {
+    backgroundColor: '#F1FAEE',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 25,
+    borderLeftWidth: 5,
+    borderLeftColor: '#A8DADC',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3
+  },
+  missionText: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#1D3557'
+  },
+  problemSolutionContainer: {
+    marginBottom: 25
+  },
+  problemSection: {
+    backgroundColor: '#FFF5F5',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 15,
+    borderLeftWidth: 5,
+    borderLeftColor: '#E63946'
+  },
+  solutionSection: {
+    backgroundColor: '#F0F8FF',
+    padding: 20,
+    borderRadius: 12,
+    borderLeftWidth: 5,
+    borderLeftColor: '#457B9D'
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1D3557',
+    marginBottom: 10
+  },
+  sectionText: {
+    fontSize: 15,
+    lineHeight: 22,
+    color: '#1D3557'
+  },
+  closingCard: {
+    backgroundColor: '#A8DADC',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 30
+  },
+  closingText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#1D3557'
+  },
+  teamIllustration: {
+    alignItems: 'center',
+    marginTop: 20
+  },
+  illustrationText: {
+    fontSize: 40,
+    marginBottom: 10
+  },
+  illustrationSubtext: {
+    fontSize: 14,
+    color: '#457B9D',
+    fontStyle: 'italic'
+  }
+});
+
+export default App;
