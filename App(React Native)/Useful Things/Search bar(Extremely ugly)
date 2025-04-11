@@ -1,0 +1,189 @@
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+const SearchBarWithCategories = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  
+  // Sample data - replace with your actual data
+  const categories = [
+    { id: '1', name: 'All' },
+    { id: '2', name: 'Products' },
+    { id: '3', name: 'Services' },
+    { id: '4', name: 'Articles' },
+    { id: '5', name: 'Users' },
+  ];
+  
+  // Sample related searches - in a real app, these would come from your backend
+  const [relatedSearches, setRelatedSearches] = useState([
+    'React Native tutorials',
+    'React Native navigation',
+    'React Native hooks',
+    'React Native animation',
+    'React Native performance',
+  ]);
+  
+  // Filter related searches based on input
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      const filtered = relatedSearches.filter(item =>
+        item.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setRelatedSearches(filtered.length > 0 ? filtered : [
+        `No results for "${searchQuery}"`,
+        'Try a different search term'
+      ]);
+    } else {
+      // Reset to default suggestions when search is empty
+      setRelatedSearches([
+        'React Native tutorials',
+        'React Native navigation',
+        'React Native hooks',
+        'React Native animation',
+        'React Native performance',
+      ]);
+    }
+  }, [searchQuery]);
+  
+  const handleSearch = () => {
+    // Implement your search logic here
+    console.log(`Searching for "${searchQuery}" in category ${activeCategory}`);
+    setShowSuggestions(false);
+  };
+  
+  const handleSuggestionPress = (suggestion) => {
+    setSearchQuery(suggestion);
+    handleSearch();
+  };
+  
+  const renderCategory = ({ item }) => (
+    <TouchableOpacity
+      style={[
+        styles.categoryItem,
+        activeCategory === item.id && styles.activeCategory
+      ]}
+      onPress={() => setActiveCategory(item.id)}
+    >
+      <Text style={[
+        styles.categoryText,
+        activeCategory === item.id && styles.activeCategoryText
+      ]}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+  
+  const renderSuggestion = ({ item }) => (
+    <TouchableOpacity
+      style={styles.suggestionItem}
+      onPress={() => handleSuggestionPress(item)}
+    >
+      <Text style={styles.suggestionText}>{item}</Text>
+    </TouchableOpacity>
+  );
+  
+  return (
+    <View style={styles.container}>
+      {/* Search Bar */}
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search..."
+          value={searchQuery}
+          onChangeText={(text) => {
+            setSearchQuery(text);
+            setShowSuggestions(text.length > 0);
+          }}
+          onSubmitEditing={handleSearch}
+          onFocus={() => setShowSuggestions(searchQuery.length > 0)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+        />
+      </View>
+      
+      {/* Categories */}
+      <FlatList
+        horizontal
+        data={categories}
+        renderItem={renderCategory}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.categoriesList}
+        showsHorizontalScrollIndicator={false}
+      />
+      
+      {/* Related Searches */}
+      {showSuggestions && (
+        <View style={styles.suggestionsContainer}>
+          <Text style={styles.suggestionsTitle}>Related Searches</Text>
+          <FlatList
+            data={relatedSearches}
+            renderItem={renderSuggestion}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#f5f5f5',
+  },
+  searchContainer: {
+    marginBottom: 16,
+  },
+  searchInput: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    backgroundColor: 'white',
+    fontSize: 16,
+  },
+  categoriesList: {
+    paddingBottom: 8,
+  },
+  categoryItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginRight: 8,
+    borderRadius: 20,
+    backgroundColor: '#e0e0e0',
+  },
+  activeCategory: {
+    backgroundColor: '#6200ee',
+  },
+  categoryText: {
+    color: '#333',
+  },
+  activeCategoryText: {
+    color: 'white',
+  },
+  suggestionsContainer: {
+    marginTop: 8,
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 12,
+    elevation: 2,
+  },
+  suggestionsTitle: {
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#666',
+  },
+  suggestionItem: {
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  suggestionText: {
+    fontSize: 16,
+    color: '#333',
+  },
+});
+
+export default SearchBarWithCategories;
