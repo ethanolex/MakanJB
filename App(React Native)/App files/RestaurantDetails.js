@@ -296,7 +296,9 @@ const RestaurantDetails = ({ navigation }) => {
             ))}
           </View>
           
-          <Text style={styles.leaveReview} onPress={() => Linking.openURL('review_page_draft.html')}>Leave a review</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('LeaveReview')}>
+            <Text style={styles.leaveReview}>Leave a review</Text>
+          </TouchableOpacity>
 
           <View style={styles.details}>
             <View style={styles.detailItem}>
