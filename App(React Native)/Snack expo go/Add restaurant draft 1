@@ -1,0 +1,317 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, Modal, Dimensions } from 'react-native';
+
+const RestaurantForm = () => {
+  const [restaurantName, setRestaurantName] = useState('');
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [locationSearch, setLocationSearch] = useState('');
+  const [cuisineSearch, setCuisineSearch] = useState('');
+  const [typeSearch, setTypeSearch] = useState('');
+
+  const locationTags = ['Sutera Utama', 'Mount Austin', 'Pelangi', 'Austin', 'Johor Jaya', 'Permas Jaya', 'Tampoi', 'Eco Botanic'];
+  const cuisineTags = ['Chinese', 'Indian', 'Japanese/Korean', 'Western', 'Others'];
+  const typeTags = ['Halal', 'Vegetarian', 'Vegan', 'Seafood', 'Cafe', 'Desert', 'Pet-friendly', 'Pub', 'Hotpot', 'Local', 'Street food'];
+
+  const filteredLocations = locationTags.filter(tag => 
+    tag.toLowerCase().includes(locationSearch.toLowerCase())
+  );
+  const filteredCuisines = cuisineTags.filter(tag => 
+    tag.toLowerCase().includes(cuisineSearch.toLowerCase())
+  );
+  const filteredTypes = typeTags.filter(tag => 
+    tag.toLowerCase().includes(typeSearch.toLowerCase())
+  );
+
+  const toggleLocation = (location) => {
+    if (selectedLocations.includes(location)) {
+      setSelectedLocations(selectedLocations.filter(item => item !== location));
+    } else {
+      setSelectedLocations([...selectedLocations, location]);
+    }
+  };
+
+  const toggleCuisine = (cuisine) => {
+    if (selectedCuisines.includes(cuisine)) {
+      setSelectedCuisines(selectedCuisines.filter(item => item !== cuisine));
+    } else {
+      setSelectedCuisines([...selectedCuisines, cuisine]);
+    }
+  };
+
+  const toggleType = (type) => {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter(item => item !== type));
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
+    }
+  };
+
+  const handleSubmit = () => {
+    const formData = {
+      restaurantName,
+      locations: selectedLocations,
+      cuisines: selectedCuisines,
+      types: selectedTypes
+    };
+    console.log('Form submitted:', formData);
+    // Here you would typically send the data to your backend
+    alert('Form submitted successfully!');
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.header}>
+        <Image 
+          source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+          style={{width: 80, height: 80}}
+        />
+      </View>
+      
+      <View style={styles.nav}>
+        <Text style={styles.navLink}>Food</Text>
+        <Text style={styles.navLink}>Shopping</Text>
+        <Text style={styles.navLink}>About us</Text>
+      </View>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        
+        {/* Centered Header */}
+        <View style={styles.header2}>
+          <Text style={styles.headerText}>Add Restaurant</Text>
+        </View>
+
+        {/* Question 1: Restaurant Name */}
+        <View style={styles.questionContainer}>
+          <View style={styles.questionRow}>
+            <Text style={styles.questionNumber}>1.</Text>
+            <Text style={styles.questionText}>Restaurant Name</Text>
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter restaurant name"
+            value={restaurantName}
+            onChangeText={setRestaurantName}
+          />
+        </View>
+
+        {/* Question 2: Location */}
+        <View style={styles.questionContainer}>
+          <View style={styles.questionRow}>
+            <Text style={styles.questionNumber}>2.</Text>
+            <Text style={styles.questionText}>Location</Text>
+          </View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search locations..."
+            value={locationSearch}
+            onChangeText={setLocationSearch}
+          />
+          <View style={styles.tagsContainer}>
+            {filteredLocations.map((location) => (
+              <TouchableOpacity
+                key={location}
+                style={[
+                  styles.tag,
+                  selectedLocations.includes(location) && styles.selectedTag
+                ]}
+                onPress={() => toggleLocation(location)}
+              >
+                <Text style={[
+                  styles.tagText,
+                  selectedLocations.includes(location) && styles.selectedTagText
+                ]}>
+                  {location}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Question 3: Cuisine */}
+        <View style={styles.questionContainer}>
+          <View style={styles.questionRow}>
+            <Text style={styles.questionNumber}>3.</Text>
+            <Text style={styles.questionText}>Cuisine</Text>
+          </View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search cuisines..."
+            value={cuisineSearch}
+            onChangeText={setCuisineSearch}
+          />
+          <View style={styles.tagsContainer}>
+            {filteredCuisines.map((cuisine) => (
+              <TouchableOpacity
+                key={cuisine}
+                style={[
+                  styles.tag,
+                  selectedCuisines.includes(cuisine) && styles.selectedTag
+                ]}
+                onPress={() => toggleCuisine(cuisine)}
+              >
+                <Text style={[
+                  styles.tagText,
+                  selectedCuisines.includes(cuisine) && styles.selectedTagText
+                ]}>
+                  {cuisine}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Question 4: Type of Restaurant */}
+        <View style={styles.questionContainer}>
+          <View style={styles.questionRow}>
+            <Text style={styles.questionNumber}>4.</Text>
+            <Text style={styles.questionText}>Type of Restaurant</Text>
+          </View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search types..."
+            value={typeSearch}
+            onChangeText={setTypeSearch}
+          />
+          <View style={styles.tagsContainer}>
+            {filteredTypes.map((type) => (
+              <TouchableOpacity
+                key={type}
+                style={[
+                  styles.tag,
+                  selectedTypes.includes(type) && styles.selectedTag
+                ]}
+                onPress={() => toggleType(type)}
+              >
+                <Text style={[
+                  styles.tagText,
+                  selectedTypes.includes(type) && styles.selectedTagText
+                ]}>
+                  {type}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* Submit Button */}
+        <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <Text style={styles.submitButtonText}>Submit</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white', // Changed to white background
+  },
+  contentContainer: {
+    padding: 20,
+    paddingBottom: 40,
+  },
+  header2: {
+    marginBottom: 30,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    alignItems: 'center', // Center header horizontally
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  questionContainer: {
+    marginBottom: 25,
+    backgroundColor: 'white', // Ensure white background for each question
+  },
+  questionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  questionNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 8,
+  },
+  questionText: {
+    fontSize: 16,
+  },
+  input: {
+    backgroundColor: 'white',
+    padding: 15,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  searchInput: {
+    backgroundColor: 'white',
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    marginBottom: 10,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: '#e0e0e0',
+    padding: 10,
+    borderRadius: 20,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  selectedTag: {
+    backgroundColor: '#4a90e2',
+  },
+  tagText: {
+    color: '#333',
+  },
+  selectedTagText: {
+    color: 'white',
+  },
+  submitButton: {
+    backgroundColor: '#4a90e2',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: '#fffff'
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
+    padding: 20,
+    alignItems: 'center'
+  },
+  nav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  navLink: {
+    color: '#333',
+    textDecorationLine: 'none',
+    marginHorizontal: 8,
+    marginVertical: 5,
+    fontSize: 14
+  },
+
+});
+
+export default RestaurantForm;
