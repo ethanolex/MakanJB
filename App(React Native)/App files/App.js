@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RestaurantDetails from './RestaurantDetails';
 import RestaurantGallery from './RestaurantGallery';
 import Homepage from './Homepage'
+import LeaveReview from './LeaveReview'
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ const App = () => {
         <Stack.Screen 
           name="Homepage" 
           component={Homepage} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="LeaveReview" 
+          component={LeaveReview} 
           options={{ headerShown: false }}
         />
         
