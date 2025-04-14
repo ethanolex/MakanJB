@@ -1,0 +1,373 @@
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, Platform } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const RestaurantForm = () => {
+  // ... (previous state declarations remain the same)
+const [restaurantName, setRestaurantName] = useState('');
+  const [selectedLocations, setSelectedLocations] = useState([]);
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [locationSearch, setLocationSearch] = useState('');
+  const [cuisineSearch, setCuisineSearch] = useState('');
+  const [typeSearch, setTypeSearch] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [exactAddress, setExactAddress] = useState('');
+  const [openingHours, setOpeningHours] = useState('');
+  const [coverImage, setCoverImage] = useState(null);
+
+  // Tag options
+  const locationTags = ['Sutera Utama', 'Mount Austin', 'Pelangi', 'Austin', 'Johor Jaya', 'Permas Jaya', 'Tampoi', 'Eco Botanic'];
+  const cuisineTags = ['Chinese', 'Indian', 'Japanese/Korean', 'Western', 'Others'];
+  const typeTags = ['Halal', 'Vegetarian', 'Vegan', 'Seafood', 'Cafe', 'Desert', 'Pet-friendly', 'Pub', 'Hotpot', 'Local', 'Street food'];
+
+  // Handle image selection
+  const selectImage = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 0.8,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.assets && response.assets.length > 0) {
+        setCoverImage(response.assets[0].uri);
+      }
+    });
+  };
+
+  // Remove image
+  const removeImage = () => {
+    setCoverImage(null);
+  };
+
+  // Handle form submission
+  const handleSubmit = () => {
+    const formData = {
+      restaurantName,
+      locations: selectedLocations,
+      cuisines: selectedCuisines,
+      types: selectedTypes,
+      phoneNumber,
+      exactAddress,
+      openingHours,
+      coverImage,
+    };
+
+    console.log('Form submitted:', formData);
+    alert('Restaurant added successfully!');
+  };
+
+  // Toggle functions for tags
+  const toggleSelection = (array, setArray, item) => {
+    if (array.includes(item)) {
+      setArray(array.filter(i => i !== item));
+    } else {
+      setArray([...array, item]);
+    }
+  };
+
+  // Filter tags based on search
+  const filterTags = (tags, searchTerm) => 
+    tags.filter(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      {/* ... (previous form sections remain the same) */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Add Restaurant</Text>
+      </View>
+
+      {/* Restaurant Name */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>1. Restaurant Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter restaurant name"
+          value={restaurantName}
+          onChangeText={setRestaurantName}
+        />
+      </View>
+
+      {/* Location */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>2. Location</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search locations..."
+          value={locationSearch}
+          onChangeText={setLocationSearch}
+        />
+        <View style={styles.tagsContainer}>
+          {filterTags(locationTags, locationSearch).map(location => (
+            <TouchableOpacity
+              key={location}
+              style={[
+                styles.tag,
+                selectedLocations.includes(location) && styles.selectedTag
+              ]}
+              onPress={() => toggleSelection(selectedLocations, setSelectedLocations, location)}
+            >
+              <Text style={styles.tagText}>{location}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* Cuisine */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>3. Cuisine</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search cuisines..."
+          value={cuisineSearch}
+          onChangeText={setCuisineSearch}
+        />
+        <View style={styles.tagsContainer}>
+          {filterTags(cuisineTags, cuisineSearch).map(cuisine => (
+            <TouchableOpacity
+              key={cuisine}
+              style={[
+                styles.tag,
+                selectedCuisines.includes(cuisine) && styles.selectedTag
+              ]}
+              onPress={() => toggleSelection(selectedCuisines, setSelectedCuisines, cuisine)}
+            >
+              <Text style={styles.tagText}>{cuisine}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* Restaurant Type */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>4. Type of Restaurant</Text>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search types..."
+          value={typeSearch}
+          onChangeText={setTypeSearch}
+        />
+        <View style={styles.tagsContainer}>
+          {filterTags(typeTags, typeSearch).map(type => (
+            <TouchableOpacity
+              key={type}
+              style={[
+                styles.tag,
+                selectedTypes.includes(type) && styles.selectedTag
+              ]}
+              onPress={() => toggleSelection(selectedTypes, setSelectedTypes, type)}
+            >
+              <Text style={styles.tagText}>{type}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+      {/* Cover Image */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>5. Cover Picture</Text>
+        <View style={styles.imageUploadWrapper}>
+          <TouchableOpacity 
+            style={styles.imageUploadContainer}
+            onPress={selectImage}
+          >
+            {coverImage ? (
+              <View style={styles.imagePreviewContainer}>
+                <Image 
+                  source={{ uri: coverImage }} 
+                  style={styles.imagePreview} 
+                  resizeMode="contain"
+                />
+                <TouchableOpacity 
+                  style={styles.removeImageButton} 
+                  onPress={removeImage}
+                >
+                  <Icon name="close" size={20} color="white" />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Icon name="add-a-photo" size={24} color="#666" />
+                <Text style={styles.imagePlaceholderText}>Add image here...</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* Phone Number */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>6. Phone Number</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter phone number"
+          value={phoneNumber}
+          onChangeText={setPhoneNumber}
+          keyboardType="phone-pad"
+        />
+      </View>
+
+      {/* Exact Address */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>7. Exact Address</Text>
+        <TextInput
+          style={[styles.input, { height: 100 }]}
+          placeholder="Enter full address"
+          value={exactAddress}
+          onChangeText={setExactAddress}
+          multiline
+        />
+      </View>
+
+      {/* Opening Hours */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>8. Opening Hours</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Example: 10AM - 10PM (Daily)"
+          value={openingHours}
+          onChangeText={setOpeningHours}
+        />
+      </View>
+
+      {/* Submit Button */}
+      <TouchableOpacity 
+        style={styles.submitButton} 
+        onPress={handleSubmit}
+      >
+        <Text style={styles.submitButtonText}>Submit</Text>
+      </TouchableOpacity>
+      {/* ... (remaining form sections remain the same) */}
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  // ... (previous styles remain the same until image styles)
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  contentContainer: {
+    padding: 20,
+    paddingBottom: 40,
+  },
+  header: {
+    marginBottom: 30,
+    alignItems: 'center',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  section: {
+    marginBottom: 25,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  input: {
+    backgroundColor: '#f9f9f9',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 15,
+    fontSize: 16,
+  },
+  searchInput: {
+    backgroundColor: '#f9f9f9',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: '#e0e0e0',
+    padding: 10,
+    borderRadius: 20,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  selectedTag: {
+    backgroundColor: '#4a90e2',
+  },
+  tagText: {
+    color: '#333',
+  },
+  imageUploadWrapper: {
+    alignItems: 'center', // Center the square horizontally
+  },
+  imageUploadContainer: {
+    width: 250, // Square width
+    height: 100, // Square height (same as width)
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#e0e0e0',
+    borderRadius: 8,
+    backgroundColor: '#f9f9f9',
+    overflow: 'hidden',
+    borderStyle: 'dashed',
+  },
+  imagePlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  imagePlaceholderText: {
+    color: '#666',
+    fontSize: 14,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  imagePreviewContainer: {
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
+  imagePreview: {
+    width: '100%',
+    height: '100%',
+  },
+  removeImageButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+submitButton: {
+    backgroundColor: '#4a90e2',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  // ... (remaining styles stay the same)
+});
+
+export default RestaurantForm;
