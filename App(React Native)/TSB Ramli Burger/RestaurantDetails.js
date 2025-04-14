@@ -92,29 +92,29 @@ const RestaurantDetails = ({ navigation }) => {
 
   const socialPosts = [
     { 
-      title: '老得慢的女人', 
-      description: '人要懂得爱惜自己，保持关心！', 
+      title: 'Great food!', 
+      description: 'Delicious sauce, very fragrant and yummy!', 
       likes: 6, 
       comments: 6,
       image: 'https://placehold.co/250x250'
     },
     { 
-      title: '罗马最大的单品出现了！！', 
-      description: '美味的热狗，快来尝尝吧！', 
+      title: 'Very Yummy', 
+      description: 'Filled my tummy and is very yummy too!', 
       likes: 8, 
       comments: 3,
       image: 'https://placehold.co/250x250'
     },
     { 
-      title: '罗马最大的单品出现了！！', 
-      description: '美味的热狗，快来尝尝吧！', 
+      title: 'Best burger EVER!', 
+      description: 'Best burger I have ever tasted!', 
       likes: 10, 
       comments: 12,
       image: 'https://placehold.co/250x250'
     },
     { 
-      title: '罗马最大的单品出现了！！', 
-      description: '美味的热狗，快来尝尝吧！', 
+      title: 'Very yummy taste', 
+      description: 'Extremely memorable delicious taste. Will visit again!', 
       likes: 15, 
       comments: 5,
       image: 'https://placehold.co/250x250'
