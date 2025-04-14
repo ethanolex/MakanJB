@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image, Platform } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const RestaurantForm = () => {
-  // ... (previous state declarations remain the same)
-const [restaurantName, setRestaurantName] = useState('');
+  // Form state
+  const [restaurantName, setRestaurantName] = useState('');
   const [selectedLocations, setSelectedLocations] = useState([]);
   const [selectedCuisines, setSelectedCuisines] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -23,27 +23,44 @@ const [restaurantName, setRestaurantName] = useState('');
   const typeTags = ['Halal', 'Vegetarian', 'Vegan', 'Seafood', 'Cafe', 'Desert', 'Pet-friendly', 'Pub', 'Hotpot', 'Local', 'Street food'];
 
   // Handle image selection
-  const selectImage = () => {
-    const options = {
-      mediaType: 'photo',
-      quality: 0.8,
-    };
+  const selectImage = async () => {
+    // Request permissions
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need camera roll permissions to make this work!');
+      return;
+    }
 
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.assets && response.assets.length > 0) {
-        setCoverImage(response.assets[0].uri);
-      }
+    // Launch image picker
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false, // Changed to false to get original image
+      aspect: undefined, // Remove aspect ratio constraint
+      quality: 0.8,
     });
+
+    if (!result.canceled) {
+      setCoverImage(result.assets[0].uri);
+    }
   };
 
   // Remove image
   const removeImage = () => {
     setCoverImage(null);
   };
+
+  // Toggle functions for tags
+  const toggleSelection = (array, setArray, item) => {
+    if (array.includes(item)) {
+      setArray(array.filter(i => i !== item));
+    } else {
+      setArray([...array, item]);
+    }
+  };
+
+  // Filter tags based on search
+  const filterTags = (tags, searchTerm) => 
+    tags.filter(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
 
   // Handle form submission
   const handleSubmit = () => {
@@ -62,27 +79,14 @@ const [restaurantName, setRestaurantName] = useState('');
     alert('Restaurant added successfully!');
   };
 
-  // Toggle functions for tags
-  const toggleSelection = (array, setArray, item) => {
-    if (array.includes(item)) {
-      setArray(array.filter(i => i !== item));
-    } else {
-      setArray([...array, item]);
-    }
-  };
-
-  // Filter tags based on search
-  const filterTags = (tags, searchTerm) => 
-    tags.filter(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {/* ... (previous form sections remain the same) */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Add Restaurant</Text>
       </View>
 
-      {/* Restaurant Name */}
+      {/* Question 1: Restaurant Name */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>1. Restaurant Name</Text>
         <TextInput
@@ -93,7 +97,7 @@ const [restaurantName, setRestaurantName] = useState('');
         />
       </View>
 
-      {/* Location */}
+      {/* Question 2: Location */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>2. Location</Text>
         <TextInput
@@ -118,7 +122,7 @@ const [restaurantName, setRestaurantName] = useState('');
         </View>
       </View>
 
-      {/* Cuisine */}
+      {/* Question 3: Cuisine */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>3. Cuisine</Text>
         <TextInput
@@ -143,7 +147,7 @@ const [restaurantName, setRestaurantName] = useState('');
         </View>
       </View>
 
-      {/* Restaurant Type */}
+      {/* Question 4: Type of Restaurant */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>4. Type of Restaurant</Text>
         <TextInput
@@ -167,7 +171,8 @@ const [restaurantName, setRestaurantName] = useState('');
           ))}
         </View>
       </View>
-      {/* Cover Image */}
+
+      {/* Question 5: Cover Picture */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>5. Cover Picture</Text>
         <View style={styles.imageUploadWrapper}>
@@ -180,25 +185,26 @@ const [restaurantName, setRestaurantName] = useState('');
                 <Image 
                   source={{ uri: coverImage }} 
                   style={styles.imagePreview} 
-                  resizeMode="contain"
+                  resizeMode="contain" // Changed to "contain" to show full image
                 />
                 <TouchableOpacity 
                   style={styles.removeImageButton} 
                   onPress={removeImage}
                 >
-                  <Icon name="close" size={20} color="white" />
+                  <MaterialIcons name="close" size={20} color="white" />
                 </TouchableOpacity>
               </View>
             ) : (
               <View style={styles.imagePlaceholder}>
-                <Icon name="add-a-photo" size={24} color="#666" />
+                <MaterialIcons name="add-a-photo" size={24} color="#666" />
                 <Text style={styles.imagePlaceholderText}>Add image here...</Text>
               </View>
             )}
           </TouchableOpacity>
         </View>
       </View>
-      {/* Phone Number */}
+
+      {/* Question 6: Phone Number */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>6. Phone Number</Text>
         <TextInput
@@ -210,7 +216,7 @@ const [restaurantName, setRestaurantName] = useState('');
         />
       </View>
 
-      {/* Exact Address */}
+      {/* Question 7: Exact Address */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>7. Exact Address</Text>
         <TextInput
@@ -222,7 +228,7 @@ const [restaurantName, setRestaurantName] = useState('');
         />
       </View>
 
-      {/* Opening Hours */}
+      {/* Question 8: Opening Hours */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>8. Opening Hours</Text>
         <TextInput
@@ -240,13 +246,11 @@ const [restaurantName, setRestaurantName] = useState('');
       >
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
-      {/* ... (remaining form sections remain the same) */}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  // ... (previous styles remain the same until image styles)
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -307,11 +311,11 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   imageUploadWrapper: {
-    alignItems: 'center', // Center the square horizontally
+    alignItems: 'center',
   },
   imageUploadContainer: {
-    width: 250, // Square width
-    height: 100, // Square height (same as width)
+    width: '100%', // Full width container
+    minHeight: 150, // Minimum height
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -319,12 +323,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#f9f9f9',
     overflow: 'hidden',
-    borderStyle: 'dashed',
+      borderStyle: 'dashed',
   },
   imagePlaceholder: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
   },
   imagePlaceholderText: {
     color: '#666',
@@ -334,20 +338,18 @@ const styles = StyleSheet.create({
   },
   imagePreviewContainer: {
     width: '100%',
-    height: '100%',
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    height: undefined, // Let height be determined by aspect ratio
+    aspectRatio: 1, // Default to square if image dimensions aren't available
   },
   imagePreview: {
     width: '100%',
-    height: '100%',
+    height: undefined,
+    aspectRatio: 1, // Will be overridden by actual image aspect ratio
   },
   removeImageButton: {
     position: 'absolute',
-    top: 5,
-    right: 5,
+    top: 10,
+    right: 10,
     backgroundColor: 'rgba(0,0,0,0.5)',
     borderRadius: 15,
     width: 30,
@@ -355,7 +357,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-submitButton: {
+  submitButton: {
     backgroundColor: '#4a90e2',
     padding: 15,
     borderRadius: 8,
@@ -367,7 +369,6 @@ submitButton: {
     fontWeight: 'bold',
     fontSize: 16,
   },
-  // ... (remaining styles stay the same)
 });
 
 export default RestaurantForm;
