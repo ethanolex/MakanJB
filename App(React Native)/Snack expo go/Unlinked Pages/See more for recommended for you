@@ -1,0 +1,292 @@
+import React from 'react';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  ScrollView, 
+  Image, 
+  TouchableOpacity, 
+  Dimensions,
+  FlatList
+} from 'react-native';
+
+const { width } = Dimensions.get('window');
+
+// Restaurant data
+const restaurants = [
+  // ... (same restaurant data array as before)
+   {
+    id: '1',
+    name: 'The Golden Fork',
+    cuisine: 'Fine Dining',
+    rating: 4.8,
+    deliveryTime: '30-45 min',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+    location: 'Sutera Utama',
+    cuisineType: 'Western',
+    restaurantType: ['Halal', 'Cafe'],
+  },
+  {
+    id: '2',
+    name: 'Burger Palace',
+    cuisine: 'American',
+    rating: 4.5,
+    deliveryTime: '20-30 min',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
+    location: 'Mount Austin',
+    cuisineType: 'Western',
+    restaurantType: ['Halal', 'Pub'],
+  },
+  {
+    id: '3',
+    name: 'Sushi World',
+    cuisine: 'Japanese',
+    rating: 4.7,
+    deliveryTime: '25-40 min',
+    image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c',
+    location: 'Pelangi',
+    cuisineType: 'Japanese/Korean',
+    restaurantType: ['Seafood', 'Hotpot'],
+  },
+  {
+    id: '4',
+    name: 'Taco Fiesta',
+    cuisine: 'Mexican',
+    rating: 4.3,
+    deliveryTime: '15-25 min',
+    image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b',
+    location: 'Austin',
+    cuisineType: 'Others',
+    restaurantType: ['Street food', 'Local'],
+  },
+  {
+    id: '5',
+    name: 'Pizza Planet',
+    cuisine: 'Italian',
+    rating: 4.4,
+    deliveryTime: '20-30 min',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38',
+    location: 'Permas Jaya',
+    cuisineType: 'Western',
+    restaurantType: ['Halal', 'Vegetarian'],
+  },
+  {
+    id: '6',
+    name: 'Green Leaf',
+    cuisine: 'Vegetarian',
+    rating: 4.6,
+    deliveryTime: '20-30 min',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd',
+    location: 'Eco Botanic',
+    cuisineType: 'Others',
+    restaurantType: ['Vegan', 'Vegetarian'],
+  },
+  // Add more restaurants as needed...
+];
+
+const Tag = ({ text }) => {
+  return (
+    <View style={styles.tag}>
+      <Text style={styles.tagText}>{text}</Text>
+    </View>
+  );
+};
+
+const RestaurantCard = ({ restaurant }) => {
+  return (
+    <TouchableOpacity style={styles.card}>
+      <Image
+        source={{ uri: restaurant.image }}
+        style={styles.cardImage}
+        resizeMode="cover"
+      />
+      <View style={styles.cardContent}>
+        <Text style={styles.restaurantName}>{restaurant.name}</Text>
+        <Text style={styles.cuisineType}>{restaurant.cuisine}</Text>
+        <View style={styles.ratingContainer}>
+          <Text style={styles.rating}>{restaurant.rating}</Text>
+          <Text style={styles.deliveryTime}>{restaurant.deliveryTime}</Text>
+        </View>
+        
+        <View style={styles.tagContainer}>
+          <Tag text={restaurant.location} />
+        </View>
+        
+        <View style={styles.tagRow}>
+          <Tag text={restaurant.cuisineType} />
+          {restaurant.restaurantType.map((type, index) => (
+            <Tag key={index} text={type} />
+          ))}
+        </View>
+        
+        {restaurant.deal && (
+          <View style={styles.dealBadge}>
+            <Text style={styles.dealText}>{restaurant.deal}</Text>
+          </View>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const Food = ({ navigation }) => {
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.header}>
+        <Image 
+          source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+          style={{width: 80, height: 80}}
+        />
+      </View>
+      
+      <View style={styles.nav}>
+        <Text style={styles.navLink}>Food</Text>
+        <Text style={styles.navLink}>Search</Text>
+        <Text style={styles.navLink}>About us</Text>
+      </View>
+
+      {/* Must Eats Header */}
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Recommended For You</Text>
+      </View>
+
+      {/* Restaurant Grid */}
+      <FlatList
+        data={restaurants}
+        numColumns={2}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.gridItem}>
+            <RestaurantCard restaurant={item} />
+          </View>
+        )}
+        contentContainerStyle={styles.gridContent}
+        scrollEnabled={false} // Since we're inside a ScrollView
+      />
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: '#fffff'
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
+    padding: 20,
+    alignItems: 'center'
+  },
+  nav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  navLink: {
+    color: '#333',
+    textDecorationLine: 'none',
+    marginHorizontal: 8,
+    marginVertical: 5,
+    fontSize: 14
+  },
+  sectionHeader: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  sectionTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#333',
+
+  },
+  gridContent: {
+    padding: 8,
+  },
+  gridItem: {
+    width: '48%',
+    marginHorizontal: '1%',
+    marginBottom: 16,
+  },
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardImage: {
+    width: '100%',
+    height: 120,
+  },
+  cardContent: {
+    padding: 8,
+  },
+  restaurantName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  cuisineType: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 6,
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  rating: {
+    color: '#ffaa00',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  deliveryTime: {
+    color: '#666',
+    fontSize: 12,
+  },
+  tagContainer: {
+    marginBottom: 4,
+  },
+  tagRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 4,
+  },
+  tag: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 12,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginRight: 4,
+    marginBottom: 4,
+  },
+  tagText: {
+    fontSize: 10,
+    color: '#555',
+  },
+  dealBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#ff4757',
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+  },
+  dealText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+});
+
+export default Food;
