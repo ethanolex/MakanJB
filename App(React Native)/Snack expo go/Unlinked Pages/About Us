@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, ScrollView, Easing, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Animated, Dimensions } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-const MakanJBIntro = ({ navigation }) => {
+const App = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const fadeAnim = useState(new Animated.Value(0))[0];
   const slideAnim = useState(new Animated.Value(30))[0];
@@ -60,7 +58,6 @@ const MakanJBIntro = ({ navigation }) => {
       Animated.timing(slideAnim, {
         toValue: 0,
         duration: 600,
-        easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }),
       Animated.timing(scaleAnim, {
@@ -74,8 +71,6 @@ const MakanJBIntro = ({ navigation }) => {
   const nextSection = () => {
     if (currentSection < sections.length - 1) {
       setCurrentSection(currentSection + 1);
-    } else {
-      navigation.navigate('Home');
     }
   };
 
@@ -86,11 +81,24 @@ const MakanJBIntro = ({ navigation }) => {
   };
 
   return (
-    <LinearGradient
-      colors={['#FF6B6B', '#FF8E53']}
-      style={styles.container}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {/* Existing Header */}
+      <View style={styles.header}>
+        <Image 
+          source={{uri: "https://static.wixstatic.com/media/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png/v1/fill/w_154,h_154,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/818cbe_6b80915765e4490eae3775030fe869d4~mv2.png"}}
+          style={{width: 80, height: 80}}
+        />
+      </View>
+      
+      {/* Existing Navigation */}
+      <View style={styles.nav}>
+        <Text style={styles.navLink}>Food</Text>
+        <Text style={styles.navLink}>Shopping</Text>
+        <Text style={styles.navLink}>About us</Text>
+      </View>
+
+      {/* MakanJB Introduction Content */}
+      <View style={styles.introContainer}>
         <Animated.View style={[
           styles.contentContainer,
           {
@@ -101,10 +109,6 @@ const MakanJBIntro = ({ navigation }) => {
             ]
           }
         ]}>
-          <View style={styles.iconContainer}>
-            <Icon name={sections[currentSection].icon} size={60} color="#FFF" />
-          </View>
-          
           <Text style={styles.title}>{sections[currentSection].title}</Text>
           
           <Image 
@@ -127,60 +131,71 @@ const MakanJBIntro = ({ navigation }) => {
             ))}
           </View>
         </Animated.View>
-      </ScrollView>
-      
-      <View style={styles.buttonContainer}>
-        {currentSection > 0 && (
-          <TouchableOpacity onPress={prevSection} style={styles.navButton}>
-            <Icon name="arrow-back" size={24} color="#FFF" />
+
+        <View style={styles.buttonContainer}>
+          {currentSection > 0 && (
+            <TouchableOpacity onPress={prevSection} style={styles.navButton}>
+              <Text style={styles.navButtonText}>Previous</Text>
+            </TouchableOpacity>
+          )}
+          
+          <TouchableOpacity onPress={nextSection} style={styles.nextButton}>
+            <Text style={styles.nextButtonText}>
+              {currentSection === sections.length - 1 ? "Get Started" : "Next"}
+            </Text>
           </TouchableOpacity>
-        )}
-        
-        <TouchableOpacity onPress={nextSection} style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>
-            {currentSection === sections.length - 1 ? "Get Started" : "Next"}
-          </Text>
-          <Icon name={currentSection === sections.length - 1 ? "check" : "arrow-forward"} size={24} color="#FFF" />
-        </TouchableOpacity>
+        </View>
       </View>
-    </LinearGradient>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
+    backgroundColor: '#ffffff'
+  },
+  header: {
+    backgroundColor: '#FCF7F3',
     padding: 20,
+    alignItems: 'center'
+  },
+  nav: {
+    backgroundColor: '#f2f2f2',
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap'
+  },
+  navLink: {
+    color: '#333',
+    textDecorationLine: 'none',
+    marginHorizontal: 8,
+    marginVertical: 5,
+    fontSize: 14
+  },
+  introContainer: {
+    padding: 20,
+    backgroundColor: '#fffff', // Matching header color
   },
   contentContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: '#FCF7F3', // White content background
     borderRadius: 20,
     padding: 25,
     alignItems: 'center',
     marginBottom: 20,
-  },
-  iconContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FFF',
+    color: '#333', // Dark text color
     textAlign: 'center',
     marginBottom: 20,
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
   },
   image: {
     width: width * 0.8,
@@ -190,7 +205,7 @@ const styles = StyleSheet.create({
   },
   contentText: {
     fontSize: 16,
-    color: '#FFF',
+    color: '#555', // Slightly lighter text color
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 20,
@@ -203,11 +218,11 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: '#ddd', // Light gray for inactive dots
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: '#FFF',
+    backgroundColor: '#FF8E53', // Orange accent color
     width: 12,
   },
   buttonContainer: {
@@ -218,22 +233,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   navButton: {
-    padding: 15,
+    backgroundColor: '#f2f2f2', // Matching nav background
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 30,
+  },
+  navButtonText: {
+    color: '#333', // Matching nav text color
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   nextButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    backgroundColor: '#FF8E53', // Orange accent color
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 30,
   },
   nextButtonText: {
-    color: '#FFF',
+    color: '#fff', // White text on orange
     fontWeight: 'bold',
-    marginRight: 10,
     fontSize: 16,
   },
 });
 
-export default MakanJBIntro;
+export default App;
