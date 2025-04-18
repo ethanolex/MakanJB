@@ -1,0 +1,239 @@
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, ScrollView, Easing, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const { width } = Dimensions.get('window');
+
+const MakanJBIntro = ({ navigation }) => {
+  const [currentSection, setCurrentSection] = useState(0);
+  const fadeAnim = useState(new Animated.Value(0))[0];
+  const slideAnim = useState(new Animated.Value(30))[0];
+  const scaleAnim = useState(new Animated.Value(0.9))[0];
+
+  // Using real image URLs from Unsplash
+  const sections = [
+    {
+      title: "Welcome to MakanJB",
+      content: "MakanJB is a non-profit mobile app that was created with the intention of helping both hungry people and hawker/restaurant owners.",
+      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      icon: 'restaurant'
+    },
+    {
+      title: "Our Story",
+      content: "Founded by two hungry brothers who spent their childhood in JB but later moved overseas. Whenever we returned to JB, we would always look forward to eating the delicious local foods that we ate during our childhood.",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      icon: 'family-restroom'
+    },
+    {
+      title: "The Problem We Saw",
+      content: "We didn't know where to find the best foods and restaurants. Many hungry people would often find ourselves wanting to try a new restaurant, yet not knowing which restaurant or what kind of food we were yearning for.",
+      image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      icon: 'search'
+    },
+    {
+      title: "Helping Local Businesses",
+      content: "Our app aims to help local hawkers and small restaurant owners who struggle to gain attention. This not only deprives us from enjoying their food but could also lead to financial pressures for the owners due to lack of customers.",
+      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      icon: 'store'
+    },
+    {
+      title: "Our Solution",
+      content: "By putting two-and-two together, we strive to help solve these two problems at the same time. Our app also helps tourists discover the best culinary delights in JB and eat like a local!",
+      image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+      icon: 'lightbulb'
+    }
+  ];
+
+  useEffect(() => {
+    // Reset animations when section changes
+    fadeAnim.setValue(0);
+    slideAnim.setValue(30);
+    scaleAnim.setValue(0.9);
+    
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 600,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      })
+    ]).start();
+  }, [currentSection]);
+
+  const nextSection = () => {
+    if (currentSection < sections.length - 1) {
+      setCurrentSection(currentSection + 1);
+    } else {
+      navigation.navigate('Home');
+    }
+  };
+
+  const prevSection = () => {
+    if (currentSection > 0) {
+      setCurrentSection(currentSection - 1);
+    }
+  };
+
+  return (
+    <LinearGradient
+      colors={['#FF6B6B', '#FF8E53']}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Animated.View style={[
+          styles.contentContainer,
+          {
+            opacity: fadeAnim,
+            transform: [
+              { translateY: slideAnim },
+              { scale: scaleAnim }
+            ]
+          }
+        ]}>
+          <View style={styles.iconContainer}>
+            <Icon name={sections[currentSection].icon} size={60} color="#FFF" />
+          </View>
+          
+          <Text style={styles.title}>{sections[currentSection].title}</Text>
+          
+          <Image 
+            source={{ uri: sections[currentSection].image }} 
+            style={styles.image}
+            resizeMode="cover"
+          />
+          
+          <Text style={styles.contentText}>{sections[currentSection].content}</Text>
+          
+          <View style={styles.dotsContainer}>
+            {sections.map((_, index) => (
+              <View 
+                key={index} 
+                style={[
+                  styles.dot, 
+                  index === currentSection ? styles.activeDot : null
+                ]} 
+              />
+            ))}
+          </View>
+        </Animated.View>
+      </ScrollView>
+      
+      <View style={styles.buttonContainer}>
+        {currentSection > 0 && (
+          <TouchableOpacity onPress={prevSection} style={styles.navButton}>
+            <Icon name="arrow-back" size={24} color="#FFF" />
+          </TouchableOpacity>
+        )}
+        
+        <TouchableOpacity onPress={nextSection} style={styles.nextButton}>
+          <Text style={styles.nextButtonText}>
+            {currentSection === sections.length - 1 ? "Get Started" : "Next"}
+          </Text>
+          <Icon name={currentSection === sections.length - 1 ? "check" : "arrow-forward"} size={24} color="#FFF" />
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  contentContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 20,
+    padding: 25,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  iconContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#FFF',
+    textAlign: 'center',
+    marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  image: {
+    width: width * 0.8,
+    height: 200,
+    marginBottom: 20,
+    borderRadius: 10,
+  },
+  contentText: {
+    fontSize: 16,
+    color: '#FFF',
+    textAlign: 'center',
+    lineHeight: 24,
+    marginBottom: 20,
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: '#FFF',
+    width: 12,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingBottom: 30,
+    alignItems: 'center',
+  },
+  navButton: {
+    padding: 15,
+  },
+  nextButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 30,
+  },
+  nextButtonText: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    marginRight: 10,
+    fontSize: 16,
+  },
+});
+
+export default MakanJBIntro;
